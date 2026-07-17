@@ -15,7 +15,7 @@ export default function Contact() {
           <div className="pointer-events-none absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-violet-500/20 blur-3xl" />
 
           <span className="relative font-mono text-sm text-cyan-400">
-            06 <span className="text-slate-500">//</span> let's talk
+            05 <span className="text-slate-500">//</span> let's talk
           </span>
           <h2 className="relative mt-4 text-3xl font-bold tracking-tight text-white sm:text-5xl">
             Let's build something

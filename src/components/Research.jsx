@@ -1,11 +1,38 @@
 import { motion } from "framer-motion";
-import { FiZap } from "react-icons/fi";
+import { FiZap, FiArrowUpRight } from "react-icons/fi";
+import { SiIeee } from "react-icons/si";
 import { Section, Reveal, Tag } from "./ui";
-import { research } from "../data/portfolio";
+import { research, publication } from "../data/portfolio";
 
 export default function Research() {
   return (
     <Section id="research" index="03" eyebrow="the deep work" title="Research">
+      {/* Published paper — highlighted link to IEEE Xplore */}
+      <Reveal>
+        <a
+          href={publication.url}
+          target="_blank"
+          rel="noreferrer"
+          className="group mb-8 flex flex-col gap-4 rounded-2xl border border-cyan-400/25 bg-gradient-to-r from-cyan-500/10 to-violet-500/10 p-6 transition-colors hover:border-cyan-400/50 sm:flex-row sm:items-center sm:justify-between"
+        >
+          <div className="flex items-center gap-4">
+            <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-slate-950/50 text-cyan-300">
+              <SiIeee size={26} />
+            </span>
+            <div>
+              <p className="text-xs font-mono uppercase tracking-wider text-cyan-400">
+                Published · {publication.venue}
+              </p>
+              <p className="mt-1 font-semibold text-white">{publication.title}</p>
+            </div>
+          </div>
+          <span className="inline-flex items-center gap-1.5 self-start rounded-lg border border-slate-700 px-4 py-2 text-sm font-medium text-slate-200 transition-colors group-hover:border-cyan-400/50 group-hover:text-white sm:self-auto">
+            View on IEEE Xplore
+            <FiArrowUpRight className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          </span>
+        </a>
+      </Reveal>
+
       <div className="space-y-8">
         {research.map((r, i) => (
           <Reveal key={r.title} delay={i * 0.1}>

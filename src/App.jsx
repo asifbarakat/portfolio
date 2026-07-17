@@ -6,7 +6,6 @@ import About from "./components/About";
 import Skills from "./components/Skills";
 import Research from "./components/Research";
 import Projects from "./components/Projects";
-import Achievements from "./components/Achievements";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
@@ -35,9 +34,6 @@ export default function App() {
         <Skills />
         <Research />
         <Projects />
-        <div className="py-8">
-          <Achievements />
-        </div>
         <Contact />
       </main>
 

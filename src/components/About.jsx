@@ -1,4 +1,4 @@
-import { FiCpu, FiSmartphone, FiShare2, FiAward } from "react-icons/fi";
+import { FiCpu, FiSmartphone, FiShare2, FiFileText } from "react-icons/fi";
 import { HiAcademicCap } from "react-icons/hi";
 import { Section, Reveal } from "./ui";
 import { education } from "../data/portfolio";
@@ -20,9 +20,9 @@ const pillars = [
     body: "Peer-to-peer networks, device discovery, and decentralized edge architectures.",
   },
   {
-    icon: FiAward,
-    title: "Algorithms",
-    body: "Competitive programming across Codeforces, CodeChef, LeetCode, and CSES.",
+    icon: FiFileText,
+    title: "Published Research",
+    body: "Peer-reviewed publication in IEEE Xplore on edge AI and split computing.",
   },
 ];
 

@@ -11,15 +11,15 @@ export const profile = {
   // Rotating roles shown in the hero (the typewriter effect cycles these)
   roles: [
     "Software Engineer",
+    "Mobile App Developer",
     "Systems & AI Researcher",
     "Split Computing @ the Edge",
-    "Competitive Programmer",
   ],
   tagline:
     "Computer Science & Engineering  ·  Software Engineer  ·  Systems & AI Researcher",
   summary:
     "I build systems that run where the cloud can't reach. My work spans systems architecture, cross-platform mobile development, and distributed AI execution — from offline peer-to-peer applications and custom computer-vision pipelines to advanced research in split computing for edge nodes and distributed large-language-model inference.",
-  location: "Bangladesh",
+  location: "Sylhet, Bangladesh",
   email: "asifbarakat2001@gmail.com",
   socials: {
     github: "https://github.com/asifbarakat",
@@ -28,10 +28,18 @@ export const profile = {
   // Quick headline stats for the hero strip
   stats: [
     { value: "3.8", label: "CGPA · BSc CSE" },
-    { value: "2", label: "Research tracks" },
+    { value: "4", label: "Research tracks" },
     { value: "4+", label: "Shipped projects" },
-    { value: "4", label: "CP platforms" },
+    { value: "1", label: "IEEE publication" },
   ],
+};
+
+/* ---- PUBLICATION ------------------------------------------------- */
+export const publication = {
+  // TODO: replace with the exact paper title from IEEE Xplore.
+  title: "Peer-Reviewed Research Publication",
+  venue: "IEEE Xplore",
+  url: "https://doi.org/10.1109/qpain69676.2026.11546109",
 };
 
 export const education = {
@@ -48,11 +56,14 @@ export const skillGroups = [
     title: "Languages & Frameworks",
     accent: "cyan",
     items: [
+      "C",
       "C++",
       "Python",
       "Dart",
       "PHP",
       "SQL",
+      "HTML",
+      "React",
       "Flutter",
       "Tailwind CSS",
     ],
@@ -91,8 +102,10 @@ export const skillGroups = [
     title: "Tools & Methodologies",
     accent: "cyan",
     items: [
-      "Algorithmic Problem-Solving",
+      "Docker",
       "Figma",
+      "Canva",
+      "draw.io",
       "Responsive UI Design",
       "Rapid Prototyping",
       "Technical Curriculum Design",
@@ -180,23 +193,16 @@ export const projects = [
     featured: false,
   },
   {
-    name: "Decentralized HW Security",
-    badge: "Edge · Hardware",
+    name: "MagicScribe",
+    badge: "Mobile · OCR",
     description:
-      "An integrated hardware + microservice architecture designed for decentralized network security.",
+      "A mobile app with built-in OCR for extracting editable text from photos and documents.",
     features:
-      "Built on Raspberry Pi 5 hardware with modular microservice communication for secure edge computing and node authentication.",
-    stack: ["Raspberry Pi 5", "Python / C++", "Microservices"],
+      "Integrates Tesseract OCR into a Flutter app — capture or pick an image and pull structured text out of it, backed by Firebase accounts.",
+    stack: ["Flutter", "Dart", "Tesseract OCR", "Firebase"],
     featured: false,
   },
 ];
-
-/* ---- ACHIEVEMENTS ------------------------------------------------ */
-export const competitiveProgramming = {
-  blurb:
-    "Active algorithmic problem solver with consistent engagement in optimization and complex data-structure challenges.",
-  platforms: ["Codeforces", "CodeChef", "LeetCode", "CSES"],
-};
 
 /* ---- NAV --------------------------------------------------------- */
 export const navLinks = [

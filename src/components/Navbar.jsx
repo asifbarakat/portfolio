@@ -46,12 +46,9 @@ export default function Navbar() {
     >
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         {/* Logo */}
-        <a href="#top" className="group flex items-center gap-2 font-mono text-lg font-bold text-white">
-          <span className="grid h-8 w-8 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-[#05070d]">
+        <a href="#top" aria-label="Home" className="group flex items-center font-mono text-lg font-bold text-white">
+          <span className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-lg text-[#05070d] transition-transform group-hover:scale-105">
             A
-          </span>
-          <span className="hidden sm:inline">
-            asif<span className="text-cyan-400">.</span>
           </span>
         </a>
 

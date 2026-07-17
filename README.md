@@ -2,7 +2,7 @@
 
 A fast, animated single-page portfolio built with **React 19 + Vite + Tailwind CSS v4 + Framer Motion**.
 
-🔗 **Live site:** _add your Vercel URL here after deploying_
+🔗 **Live site:** https://portfolio-jet-omega-86.vercel.app/
 
 ---
 

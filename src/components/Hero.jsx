@@ -153,15 +153,16 @@ export default function Hero() {
             </div>
             {/* body */}
             <pre className="overflow-x-auto p-5 font-mono text-[13px] leading-relaxed text-slate-300">
-<span className="text-slate-500"># deploy at the edge, not the cloud</span>{"\n"}
+<span className="text-slate-500"># quality engineering &amp; systems testing</span>{"\n"}
 <span className="text-violet-400">const</span> asif = {"{"}
-{"\n"}  role: <span className="text-emerald-400">"Systems &amp; AI Engineer"</span>,
-{"\n"}  focus: [<span className="text-cyan-300">"split-computing"</span>, <span className="text-cyan-300">"edge-ai"</span>],
-{"\n"}  hardware: <span className="text-emerald-400">"Raspberry Pi 5"</span>,
-{"\n"}  ships: <span className="text-amber-300">true</span>,
+{"\n"}  role: <span className="text-emerald-400">"SQA Engineer Intern"</span>,
+{"\n"}  company: <span className="text-cyan-300">"AppifyLab"</span>,
+{"\n"}  target: <span className="text-violet-300">"Aspiring SDET"</span>,
+{"\n"}  stack: [<span className="text-cyan-300">"Playwright"</span>, <span className="text-cyan-300">"Postman"</span>, <span className="text-cyan-300">"k6"</span>, <span className="text-cyan-300">"Grafana"</span>],
+{"\n"}  testing: <span className="text-amber-300">"automated &amp; manual"</span>,
 {"\n"}{"}"};
 {"\n"}
-{"\n"}<span className="text-violet-400">await</span> asif.<span className="text-cyan-300">build</span>(<span className="text-emerald-400">"something great"</span>);
+{"\n"}<span className="text-violet-400">await</span> asif.<span className="text-cyan-300">verifySystemQuality</span>();
             </pre>
           </div>
 

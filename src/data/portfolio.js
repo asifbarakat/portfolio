@@ -10,15 +10,16 @@ export const profile = {
   name: "Asif Barakat Chowdhury",
   // Rotating roles shown in the hero (the typewriter effect cycles these)
   roles: [
+    "SQA Engineer Intern @ AppifyLab",
+    "Aspiring SDET Engineer",
     "Software Engineer",
-    "Mobile App Developer",
+    "Performance Tester (k6 + Grafana)",
     "Systems & AI Researcher",
-    "Split Computing @ the Edge",
   ],
   tagline:
-    "Computer Science & Engineering  ·  Software Engineer  ·  Systems & AI Researcher",
+    "SQA Engineer Intern @ AppifyLab  ·  Aspiring SDET  ·  Software Engineer & Systems Researcher",
   summary:
-    "I build systems that run where the cloud can't reach. My work spans systems architecture, cross-platform mobile development, and distributed AI execution — from offline peer-to-peer applications and custom computer-vision pipelines to advanced research in split computing for edge nodes and distributed large-language-model inference.",
+    "SQA Engineer Intern at AppifyLab and aspiring SDET. I specialize in comprehensive quality assurance, end-to-end automation with Playwright, API testing via Postman, and high-concurrency load/performance benchmarking using k6 and Grafana, alongside strong foundations in software systems and distributed AI.",
   location: "Sylhet, Bangladesh",
   email: "asifbarakat2001@gmail.com",
   socials: {
@@ -28,9 +29,25 @@ export const profile = {
   // Quick headline stats for the hero strip
   stats: [
     { value: "3.8", label: "CGPA · BSc CSE" },
-    { value: "4", label: "Research tracks" },
+    { value: "SQA", label: "Intern @ AppifyLab" },
     { value: "4+", label: "Shipped projects" },
     { value: "1", label: "IEEE publication" },
+  ],
+};
+
+/* ---- EXPERIENCE -------------------------------------------------- */
+export const experience = {
+  role: "SQA Engineer Intern",
+  company: "AppifyLab",
+  period: "Present",
+  description:
+    "Executing manual & exploratory testing, authoring end-to-end automation test suites with Playwright, verifying RESTful APIs via Postman, and benchmarking performance under concurrency with k6 and Grafana telemetry dashboards.",
+  highlights: [
+    "Manual & Exploratory Testing",
+    "Playwright E2E Automation",
+    "Postman API Validation",
+    "k6 + Grafana Load Testing",
+    "Regression & Defect Lifecycle",
   ],
 };
 
@@ -53,18 +70,35 @@ export const education = {
 /* ---- SKILLS ------------------------------------------------------ */
 export const skillGroups = [
   {
+    title: "SQA, Automation & Testing",
+    accent: "emerald",
+    items: [
+      "Manual Testing",
+      "Playwright",
+      "Postman",
+      "k6",
+      "Grafana",
+      "API Testing",
+      "E2E Automation",
+      "Regression Testing",
+      "Performance & Load Testing",
+      "Test Case Design",
+      "Defect Tracking",
+    ],
+  },
+  {
     title: "Languages & Frameworks",
     accent: "cyan",
     items: [
+      "Python",
+      "JavaScript",
+      "Dart",
+      "Flutter",
+      "React",
       "C",
       "C++",
-      "Python",
-      "Dart",
-      "PHP",
       "SQL",
-      "HTML",
-      "React",
-      "Flutter",
+      "PHP",
       "Tailwind CSS",
     ],
   },
@@ -86,29 +120,17 @@ export const skillGroups = [
     ],
   },
   {
-    title: "Systems & Hardware",
-    accent: "emerald",
-    items: [
-      "Offline P2P Networks",
-      "Local Device Discovery",
-      "Decentralized Edge Computing",
-      "Microservices",
-      "Raspberry Pi 5",
-      "CPU-Only Edge Optimization",
-      "Hardware-in-the-Loop",
-    ],
-  },
-  {
-    title: "Tools & Methodologies",
+    title: "Systems, Tools & DevOps",
     accent: "cyan",
     items: [
       "Docker",
+      "Git",
+      "Offline P2P Networks",
+      "Local Device Discovery",
+      "Microservices",
+      "Raspberry Pi 5",
+      "Hardware-in-the-Loop",
       "Figma",
-      "Canva",
-      "draw.io",
-      "Responsive UI Design",
-      "Rapid Prototyping",
-      "Technical Curriculum Design",
     ],
   },
 ];

@@ -12,10 +12,10 @@ export default function Projects() {
             <motion.div
               whileHover={{ y: -6 }}
               transition={{ type: "spring", stiffness: 300, damping: 22 }}
-              className={`glow-border group flex h-full flex-col rounded-2xl border bg-slate-900/40 p-6 ${
+              className={`group flex h-full flex-col rounded-2xl border p-6 transition-all ${
                 p.featured
-                  ? "border-cyan-400/25 bg-gradient-to-b from-cyan-500/[0.06] to-transparent"
-                  : "border-slate-800"
+                  ? "border-cyan-400/30 bg-slate-900/70 hover:border-cyan-400/60"
+                  : "border-slate-800 bg-slate-900/50 hover:border-slate-700"
               }`}
             >
               <div className="mb-4 flex items-start justify-between">

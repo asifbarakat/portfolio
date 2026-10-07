@@ -47,7 +47,7 @@ export default function Navbar() {
       <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
         {/* Logo */}
         <a href="#top" aria-label="Home" className="group flex items-center font-mono text-lg font-bold text-white">
-          <span className="grid h-9 w-9 place-items-center rounded-lg bg-gradient-to-br from-cyan-400 to-violet-500 text-lg text-[#05070d] transition-transform group-hover:scale-105">
+          <span className="grid h-9 w-9 place-items-center rounded-lg bg-cyan-400 text-lg font-black text-slate-950 transition-colors group-hover:bg-cyan-300">
             A
           </span>
         </a>

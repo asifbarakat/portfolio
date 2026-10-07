@@ -9,18 +9,14 @@ export default function Contact() {
   return (
     <section id="contact" className="relative mx-auto max-w-6xl px-6 py-24 md:py-32">
       <Reveal>
-        <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-900/80 to-slate-900/30 px-6 py-16 text-center md:px-16">
-          {/* glow accents */}
-          <div className="pointer-events-none absolute -left-20 -top-20 h-64 w-64 rounded-full bg-cyan-500/20 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-20 -right-20 h-64 w-64 rounded-full bg-violet-500/20 blur-3xl" />
-
+        <div className="relative overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/70 px-6 py-16 text-center md:px-16">
           <span className="relative font-mono text-sm text-cyan-400">
             05 <span className="text-slate-500">//</span> let's talk
           </span>
           <h2 className="relative mt-4 text-3xl font-bold tracking-tight text-white sm:text-5xl">
             Let's build something
             <br />
-            <span className="gradient-text">at the edge.</span>
+            <span className="text-cyan-400">at the edge.</span>
           </h2>
           <p className="relative mx-auto mt-5 max-w-xl leading-relaxed text-slate-400">
             Open to research collaborations, software engineering roles, and interesting
@@ -29,9 +25,9 @@ export default function Contact() {
 
           <motion.a
             href={`mailto:${profile.email}`}
-            whileHover={{ scale: 1.03 }}
+            whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="relative mt-8 inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-8 py-4 text-lg font-semibold text-[#05070d]"
+            className="relative mt-8 inline-flex items-center gap-2 rounded-xl bg-cyan-400 hover:bg-cyan-300 px-8 py-4 text-lg font-semibold text-slate-950 transition-colors shadow-sm"
           >
             <HiOutlineMail size={20} /> {profile.email}
           </motion.a>

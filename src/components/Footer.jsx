@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="border-t border-slate-800/60">
       <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-6 py-10 sm:flex-row sm:justify-between">
         <div className="flex items-center gap-2 font-mono text-slate-400">
-          <span className="grid h-7 w-7 place-items-center rounded-md bg-gradient-to-br from-cyan-400 to-violet-500 text-sm font-bold text-[#05070d]">
+          <span className="grid h-7 w-7 place-items-center rounded-md bg-cyan-400 text-sm font-black text-slate-950">
             A
           </span>
           Asif Barakat Chowdhury

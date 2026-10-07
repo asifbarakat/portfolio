@@ -22,7 +22,7 @@ export default function App() {
       {/* scroll progress bar */}
       <motion.div
         style={{ scaleX }}
-        className="fixed inset-x-0 top-0 z-[60] h-[3px] origin-left bg-gradient-to-r from-cyan-400 via-violet-400 to-emerald-400"
+        className="fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-cyan-400"
       />
 
       <Background />

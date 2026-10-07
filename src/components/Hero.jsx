@@ -63,7 +63,7 @@ export default function Hero() {
           >
             Asif Barakat
             <br />
-            <span className="gradient-text">Chowdhury</span>
+            <span className="text-cyan-400">Chowdhury</span>
           </motion.h1>
 
           <motion.div
@@ -93,7 +93,7 @@ export default function Hero() {
           >
             <a
               href="#projects"
-              className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-cyan-400 to-violet-500 px-6 py-3 font-semibold text-[#05070d] transition-transform hover:scale-[1.03]"
+              className="group inline-flex items-center gap-2 rounded-xl bg-cyan-400 hover:bg-cyan-300 px-6 py-3 font-semibold text-slate-950 transition-colors shadow-sm"
             >
               View my work
               <FiArrowRight className="transition-transform group-hover:translate-x-1" />
@@ -143,7 +143,7 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 0.3 }}
           className="animate-float-slow"
         >
-          <div className="glow-border rounded-2xl border border-slate-800 bg-slate-900/60 shadow-2xl backdrop-blur-sm">
+          <div className="rounded-2xl border border-slate-800 bg-slate-900/70 shadow-2xl backdrop-blur-sm">
             {/* title bar */}
             <div className="flex items-center gap-2 border-b border-slate-800 px-4 py-3">
               <span className="h-3 w-3 rounded-full bg-red-400/80" />
@@ -171,9 +171,9 @@ export default function Hero() {
             {profile.stats.map((s) => (
               <div
                 key={s.label}
-                className="rounded-xl border border-slate-800 bg-slate-900/40 px-4 py-3 text-center"
+                className="rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-3 text-center"
               >
-                <div className="gradient-text text-2xl font-bold">{s.value}</div>
+                <div className="text-2xl font-bold text-cyan-400">{s.value}</div>
                 <div className="mt-0.5 text-xs text-slate-500">{s.label}</div>
               </div>
             ))}

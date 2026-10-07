@@ -13,7 +13,7 @@ export default function Research() {
           href={publication.url}
           target="_blank"
           rel="noreferrer"
-          className="group mb-8 flex flex-col gap-4 rounded-2xl border border-cyan-400/25 bg-gradient-to-r from-cyan-500/10 to-violet-500/10 p-6 transition-colors hover:border-cyan-400/50 sm:flex-row sm:items-center sm:justify-between"
+          className="group mb-8 flex flex-col gap-4 rounded-2xl border border-slate-800 bg-slate-900/70 p-6 transition-colors hover:border-cyan-400/50 sm:flex-row sm:items-center sm:justify-between"
         >
           <div className="flex items-center gap-4">
             <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-slate-950/50 text-cyan-300">
@@ -39,10 +39,10 @@ export default function Research() {
             <motion.article
               whileHover={{ y: -4 }}
               transition={{ type: "spring", stiffness: 300, damping: 24 }}
-              className="glow-border overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/40"
+              className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/50 hover:border-slate-700 transition-colors"
             >
               {/* header band */}
-              <div className="flex flex-wrap items-center gap-3 border-b border-slate-800 bg-gradient-to-r from-cyan-500/5 to-violet-500/5 px-6 py-4">
+              <div className="flex flex-wrap items-center gap-3 border-b border-slate-800 bg-slate-950/40 px-6 py-4">
                 <span className="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 font-mono text-xs text-cyan-300">
                   <FiZap size={12} /> {r.kind}
                 </span>

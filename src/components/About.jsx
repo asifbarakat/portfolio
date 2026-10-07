@@ -54,7 +54,7 @@ export default function About() {
           <div className="mt-8 grid gap-4 sm:grid-cols-2">
             {pillars.map((p, i) => (
               <Reveal key={p.title} delay={0.1 + i * 0.08}>
-                <div className="glow-border h-full rounded-xl border border-slate-800 bg-slate-900/40 p-5">
+                <div className="h-full rounded-xl border border-slate-800 bg-slate-900/50 p-5 hover:border-slate-700 transition-colors">
                   <p.icon className="mb-3 text-cyan-400" size={22} />
                   <h3 className="font-semibold text-white">{p.title}</h3>
                   <p className="mt-1 text-sm leading-relaxed text-slate-400">{p.body}</p>
@@ -68,9 +68,9 @@ export default function About() {
         <div className="space-y-6">
           {experience && (
             <Reveal delay={0.12}>
-              <div className="glow-border rounded-2xl border border-emerald-500/30 bg-gradient-to-b from-slate-900/80 to-slate-900/40 p-6 shadow-xl">
+              <div className="rounded-2xl border border-slate-800 hover:border-emerald-500/40 bg-slate-900/70 p-6 shadow-lg transition-colors">
                 <div className="flex items-center justify-between">
-                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/20 text-emerald-300">
+                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">
                     <FiBriefcase size={22} />
                   </div>
                   <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/40 bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300">
@@ -79,7 +79,7 @@ export default function About() {
                   </span>
                 </div>
                 <p className="mt-3 text-lg font-bold text-white">{experience.role}</p>
-                <p className="text-sm font-semibold text-cyan-300">{experience.company}</p>
+                <p className="text-sm font-semibold text-cyan-400">{experience.company}</p>
                 <p className="mt-2 text-sm leading-relaxed text-slate-300">{experience.description}</p>
                 <div className="mt-4 flex flex-wrap gap-1.5">
                   {experience.highlights.map((h, idx) => (
@@ -96,8 +96,8 @@ export default function About() {
           )}
 
           <Reveal delay={0.18}>
-            <div className="glow-border rounded-2xl border border-slate-800 bg-gradient-to-b from-slate-900/70 to-slate-900/30 p-6">
-              <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-400/20 to-violet-500/20 text-cyan-300">
+            <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-6">
+              <div className="mb-4 inline-flex h-11 w-11 items-center justify-center rounded-xl border border-slate-800 bg-slate-800/80 text-cyan-400">
                 <HiAcademicCap size={24} />
               </div>
               <h3 className="text-xs font-mono uppercase tracking-wider text-slate-500">
@@ -107,7 +107,7 @@ export default function About() {
               <p className="text-sm text-slate-300">{education.institution}</p>
 
               <div className="mt-4 flex items-center gap-3 rounded-xl border border-slate-800 bg-slate-950/50 px-4 py-2.5">
-                <span className="gradient-text text-2xl font-extrabold">3.8</span>
+                <span className="text-2xl font-extrabold text-cyan-400">3.8</span>
                 <span className="text-xs text-slate-400">
                   CGPA <span className="text-slate-600">/ 4.0</span>
                 </span>

@@ -39,7 +39,7 @@ export function Section({ id, index, eyebrow, title, children, className = "" })
           <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
             {title}
           </h2>
-          <div className="h-px w-24 bg-gradient-to-r from-cyan-400 to-violet-400" />
+          <div className="h-0.5 w-12 bg-cyan-400" />
         </div>
       </Reveal>
       {children}

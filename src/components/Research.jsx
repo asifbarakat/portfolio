@@ -1,52 +1,78 @@
 import { motion } from "framer-motion";
-import { FiZap } from "react-icons/fi";
 import { Section, Reveal, Tag } from "./ui";
 import { research } from "../data/portfolio";
 
+/* Animated edge -> codec -> host pipeline */
+function Pipeline() {
+  const Node = ({ title, sub, hot }) => (
+    <div className={`rounded-lg border px-4 py-3 text-center ${hot ? "border-acid" : "border-line"} bg-raise`}>
+      <div className="font-mono text-sm font-bold text-bone">{title}</div>
+      <div className="font-mono text-[10px] uppercase tracking-widest text-mute">{sub}</div>
+    </div>
+  );
+  const Wire = ({ delay, small }) => (
+    <div className="relative mx-2 h-px flex-1 bg-line">
+      {[0, 0.5, 1].map((d) => (
+        <motion.span
+          key={d}
+          className={`absolute top-1/2 -translate-y-1/2 rounded-[2px] bg-acid ${small ? "h-1 w-1" : "h-2 w-3"}`}
+          initial={{ left: "0%", opacity: 0 }}
+          animate={{ left: ["0%", "100%"], opacity: [0, 1, 1, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity, delay: delay + d * 0.5, ease: "linear" }}
+        />
+      ))}
+    </div>
+  );
+  return (
+    <div className="flex items-center rounded-xl border border-line bg-panel p-5">
+      <Node title="RPi 5" sub="edge head" />
+      <Wire delay={0} />
+      <Node title="CODEC" sub="zero-param" hot />
+      <Wire delay={0.2} small />
+      <Node title="HOST" sub="rpc tail" />
+    </div>
+  );
+}
+
 export default function Research() {
   return (
-    <Section id="research" index="03" eyebrow="the deep work" title="Systems & Research">
-      <div className="space-y-8">
-        {research.map((r, i) => (
-          <Reveal key={r.title} delay={i * 0.1}>
-            <motion.article
-              whileHover={{ y: -4 }}
-              transition={{ type: "spring", stiffness: 300, damping: 24 }}
-              className="overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/50 transition-colors hover:border-slate-700"
-            >
-              <div className="flex flex-wrap items-center gap-3 border-b border-slate-800 bg-slate-950/40 px-6 py-4">
-                <span className="inline-flex items-center gap-1.5 rounded-full border border-cyan-400/30 bg-cyan-400/10 px-3 py-1 font-mono text-xs text-cyan-300">
-                  <FiZap size={12} /> {r.kind}
-                </span>
-              </div>
-              <div className="grid gap-8 p-6 md:p-8 lg:grid-cols-[1fr_1.1fr]">
-                <div>
-                  <h3 className="text-xl font-bold leading-snug text-white">{r.title}</h3>
-                  <p className="mt-4 leading-relaxed text-slate-400">{r.description}</p>
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {r.stack.map((s) => (
-                      <Tag key={s} accent="violet">
-                        {s}
-                      </Tag>
-                    ))}
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  {r.contributions.map((c, ci) => (
-                    <div key={c.head} className="flex gap-4">
-                      <span className="mt-0.5 font-mono text-sm font-bold text-cyan-400">0{ci + 1}</span>
-                      <div className="border-l border-slate-800 pl-4">
-                        <h4 className="font-semibold text-white">{c.head}</h4>
-                        <p className="mt-1 text-sm leading-relaxed text-slate-400">{c.body}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </motion.article>
+    <Section id="research" index="03" eyebrow="the deep work" title="Systems" accent="research.">
+      {research.map((r) => (
+        <div key={r.title} className="grid gap-10 lg:grid-cols-[1fr_1fr]">
+          <Reveal>
+            <span className="inline-flex rounded-full border border-acid/40 px-3 py-1 font-mono text-[11px] uppercase tracking-widest text-acid">
+              {r.kind}
+            </span>
+            <h3 className="mt-5 text-3xl font-semibold leading-tight tracking-tight text-bone">{r.title}</h3>
+            <p className="mt-4 leading-relaxed text-mute">{r.description}</p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              {r.stack.map((s) => (
+                <Tag key={s}>{s}</Tag>
+              ))}
+            </div>
+            <div className="mt-8">
+              <Pipeline />
+              <p className="mt-2 font-mono text-[10px] uppercase tracking-widest text-mute">
+                features shrink after the codec before crossing the network
+              </p>
+            </div>
           </Reveal>
-        ))}
-      </div>
+
+          <Reveal delay={0.1}>
+            <ol className="divide-y divide-line border-y border-line">
+              {r.contributions.map((c, i) => (
+                <li key={c.head} className="grid grid-cols-[3rem_1fr] gap-4 py-6">
+                  <span className="font-mono text-sm text-acid">0{i + 1}</span>
+                  <div>
+                    <h4 className="font-semibold text-bone">{c.head}</h4>
+                    <p className="mt-1 text-sm leading-relaxed text-mute">{c.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </Reveal>
+        </div>
+      ))}
     </Section>
   );
 }

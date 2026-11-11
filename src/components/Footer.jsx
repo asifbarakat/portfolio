@@ -1,41 +1,22 @@
-import { FaGithub, FaLinkedinIn } from "react-icons/fa";
-import { HiOutlineMail } from "react-icons/hi";
-import { profile, navLinks } from "../data/portfolio";
+import { navLinks, profile } from "../data/portfolio";
 
 export default function Footer() {
   return (
-    <footer className="border-t border-slate-800/60">
-      <div className="mx-auto flex max-w-6xl flex-col items-center gap-6 px-6 py-10 sm:flex-row sm:justify-between">
-        <div className="flex items-center gap-2 font-mono text-slate-400">
-          <span className="grid h-7 w-7 place-items-center rounded-md bg-cyan-400 text-sm font-black text-slate-950">
-            A
-          </span>
-          Asif Barakat Chowdhury
+    <footer className="border-t border-line">
+      <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-6 py-8 sm:flex-row sm:justify-between">
+        <div className="flex items-center gap-2 font-mono text-sm text-mute">
+          <span className="grid h-7 w-7 place-items-center rounded-full bg-acid text-[10px] font-black text-ink">AB</span>
+          {profile.name}
         </div>
-
-        <nav className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-sm text-slate-500">
+        <nav className="flex flex-wrap justify-center gap-x-5 gap-y-2 font-mono text-xs uppercase tracking-wider text-mute">
           {navLinks.map((l) => (
-            <a key={l.id} href={`#${l.id}`} className="transition-colors hover:text-cyan-400">
+            <a key={l.id} href={`#${l.id}`} className="transition-colors hover:text-acid">
               {l.label}
             </a>
           ))}
         </nav>
-
-        <div className="flex items-center gap-3">
-          <a href={profile.socials.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="text-slate-400 transition-colors hover:text-white">
-            <FaGithub size={18} />
-          </a>
-          <a href={profile.socials.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn" className="text-slate-400 transition-colors hover:text-white">
-            <FaLinkedinIn size={17} />
-          </a>
-          <a href={`mailto:${profile.email}`} aria-label="Email" className="text-slate-400 transition-colors hover:text-white">
-            <HiOutlineMail size={18} />
-          </a>
-        </div>
+        <p className="font-mono text-xs text-mute">© {new Date().getFullYear()} · React · Vite · Tailwind</p>
       </div>
-      <p className="pb-8 text-center text-xs text-slate-600">
-        © {new Date().getFullYear()} Asif Barakat Chowdhury · Built with React, Vite &amp; Tailwind CSS
-      </p>
     </footer>
   );
 }

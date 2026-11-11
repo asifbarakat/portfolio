@@ -1,32 +1,16 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiMenu, FiX } from "react-icons/fi";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa";
-import { navLinks, profile } from "../data/portfolio";
+import { navLinks } from "../data/portfolio";
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // Highlight the section currently in view
-  useEffect(() => {
-    const sections = navLinks
-      .map((l) => document.getElementById(l.id))
-      .filter(Boolean);
+    const sections = navLinks.map((l) => document.getElementById(l.id)).filter(Boolean);
     const obs = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id);
-        });
-      },
+      (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
       { rootMargin: "-45% 0px -50% 0px" }
     );
     sections.forEach((s) => obs.observe(s));
@@ -35,98 +19,72 @@ export default function Navbar() {
 
   return (
     <motion.header
-      initial={{ y: -80, opacity: 0 }}
+      initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? "border-b border-slate-800/60 bg-[#05070d]/80 backdrop-blur-xl"
-          : "border-b border-transparent"
-      }`}
+      className="fixed inset-x-0 top-4 z-50 flex justify-center px-4"
     >
-      <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        {/* Logo */}
-        <a href="#top" aria-label="Home" className="group flex items-center font-mono text-lg font-bold text-white">
-          <span className="grid h-9 w-9 place-items-center rounded-lg bg-cyan-400 text-lg font-black text-slate-950 transition-colors group-hover:bg-cyan-300">
-            A
-          </span>
+      <nav className="flex w-full max-w-3xl items-center justify-between rounded-full border border-line bg-ink/80 py-2 pl-3 pr-2 backdrop-blur-xl">
+        <a href="#top" aria-label="Home" className="flex items-center gap-2 font-mono text-sm font-bold text-bone">
+          <span className="grid h-8 w-8 place-items-center rounded-full bg-acid text-xs font-black text-ink">AB</span>
+          <span className="hidden sm:inline">asif.barakat</span>
         </a>
 
-        {/* Desktop links */}
         <ul className="hidden items-center gap-1 md:flex">
-          {navLinks.map((link) => (
-            <li key={link.id}>
+          {navLinks.map((l) => (
+            <li key={l.id}>
               <a
-                href={`#${link.id}`}
-                className={`relative rounded-lg px-4 py-2 text-sm font-medium transition-colors ${
-                  active === link.id
-                    ? "text-white"
-                    : "text-slate-400 hover:text-white"
+                href={`#${l.id}`}
+                className={`relative rounded-full px-4 py-1.5 font-mono text-xs uppercase tracking-wider transition-colors ${
+                  active === l.id ? "text-ink" : "text-mute hover:text-bone"
                 }`}
               >
-                {active === link.id && (
+                {active === l.id && (
                   <motion.span
                     layoutId="nav-pill"
-                    className="absolute inset-0 -z-10 rounded-lg bg-slate-800/70"
+                    className="absolute inset-0 -z-10 rounded-full bg-acid"
                     transition={{ type: "spring", stiffness: 380, damping: 30 }}
                   />
                 )}
-                {link.label}
+                {l.label}
               </a>
             </li>
           ))}
         </ul>
 
-        {/* Right side: socials + mobile toggle */}
         <div className="flex items-center gap-2">
           <a
-            href={profile.socials.github}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="GitHub"
-            className="grid h-9 w-9 place-items-center rounded-lg text-slate-400 transition-colors hover:bg-slate-800/70 hover:text-white"
+            href="#contact"
+            className="rounded-full border border-line px-4 py-1.5 font-mono text-xs uppercase tracking-wider text-bone transition-colors hover:border-acid hover:text-acid"
           >
-            <FaGithub size={18} />
-          </a>
-          <a
-            href={profile.socials.linkedin}
-            target="_blank"
-            rel="noreferrer"
-            aria-label="LinkedIn"
-            className="grid h-9 w-9 place-items-center rounded-lg text-slate-400 transition-colors hover:bg-slate-800/70 hover:text-white"
-          >
-            <FaLinkedinIn size={17} />
+            Hire me
           </a>
           <button
             onClick={() => setOpen((v) => !v)}
             aria-label="Toggle menu"
-            className="grid h-9 w-9 place-items-center rounded-lg text-slate-300 hover:bg-slate-800/70 md:hidden"
+            className="grid h-8 w-8 place-items-center rounded-full text-bone md:hidden"
           >
-            {open ? <FiX size={20} /> : <FiMenu size={20} />}
+            {open ? <FiX size={18} /> : <FiMenu size={18} />}
           </button>
         </div>
       </nav>
 
-      {/* Mobile menu */}
       <AnimatePresence>
         {open && (
           <motion.ul
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="overflow-hidden border-t border-slate-800/60 bg-[#05070d]/95 backdrop-blur-xl md:hidden"
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            className="absolute top-16 w-[calc(100%-2rem)] max-w-3xl overflow-hidden rounded-2xl border border-line bg-panel md:hidden"
           >
-            {navLinks.map((link) => (
-              <li key={link.id}>
+            {navLinks.map((l) => (
+              <li key={l.id}>
                 <a
-                  href={`#${link.id}`}
+                  href={`#${l.id}`}
                   onClick={() => setOpen(false)}
-                  className={`block px-6 py-3 text-sm ${
-                    active === link.id ? "text-cyan-400" : "text-slate-300"
-                  }`}
+                  className="block border-b border-line px-5 py-3 font-mono text-sm text-bone last:border-0"
                 >
-                  {link.label}
+                  {l.label}
                 </a>
               </li>
             ))}

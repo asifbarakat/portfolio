@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
-import { FiArrowRight, FiMapPin } from "react-icons/fi";
-import { HiOutlineMail } from "react-icons/hi";
+import { FiArrowUpRight, FiMapPin } from "react-icons/fi";
 import { profile } from "../data/portfolio";
+import LiveConsole from "./LiveConsole";
 
-/* Typewriter that cycles through profile.roles */
-function useTypewriter(words, { typeSpeed = 70, deleteSpeed = 40, pause = 1400 } = {}) {
+const marqueeItems = [
+  "Playwright", "Appium", "Postman", "Grafana k6", "Chrome DevTools", "GitHub Actions",
+  "TypeScript", "Python", "Flutter", "Docker", "Linux", "Raspberry Pi 5",
+];
+
+function useTypewriter(words, { typeSpeed = 60, deleteSpeed = 30, pause = 1500 } = {}) {
   const [text, setText] = useState("");
   const [i, setI] = useState(0);
   const [deleting, setDeleting] = useState(false);
@@ -14,18 +18,15 @@ function useTypewriter(words, { typeSpeed = 70, deleteSpeed = 40, pause = 1400 }
   useEffect(() => {
     const word = words[i % words.length];
     let timeout;
-
-    if (!deleting && text === word) {
-      timeout = setTimeout(() => setDeleting(true), pause);
-    } else if (deleting && text === "") {
+    if (!deleting && text === word) timeout = setTimeout(() => setDeleting(true), pause);
+    else if (deleting && text === "") {
       setDeleting(false);
       setI((v) => v + 1);
     } else {
-      timeout = setTimeout(() => {
-        setText((prev) =>
-          deleting ? word.slice(0, prev.length - 1) : word.slice(0, prev.length + 1)
-        );
-      }, deleting ? deleteSpeed : typeSpeed);
+      timeout = setTimeout(
+        () => setText((p) => (deleting ? word.slice(0, p.length - 1) : word.slice(0, p.length + 1))),
+        deleting ? deleteSpeed : typeSpeed
+      );
     }
     return () => clearTimeout(timeout);
   }, [text, deleting, i, words, typeSpeed, deleteSpeed, pause]);
@@ -33,152 +34,101 @@ function useTypewriter(words, { typeSpeed = 70, deleteSpeed = 40, pause = 1400 }
   return text;
 }
 
+const fade = (delay) => ({
+  initial: { opacity: 0, y: 24 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.6, delay },
+});
+
 export default function Hero() {
   const typed = useTypewriter(profile.roles);
 
   return (
-    <section id="top" className="relative flex min-h-screen items-center px-6 pt-28 pb-16">
-      <div className="grid-bg absolute inset-0 -z-10" />
-      <div className="mx-auto grid w-full max-w-6xl items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
-        {/* Left — copy */}
+    <section id="top" className="relative px-6 pt-36 pb-10">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-sm text-emerald-300"
+            {...fade(0)}
+            className="mb-8 inline-flex items-center gap-2 rounded-full border border-line bg-panel px-4 py-1.5 font-mono text-xs text-mute"
           >
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-acid opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-acid" />
             </span>
-            Open to opportunities
+            Open to SQA / SDET roles
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.05 }}
-            className="text-4xl font-extrabold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl"
+            {...fade(0.05)}
+            className="text-5xl font-semibold leading-[0.98] tracking-tighter text-bone sm:text-7xl lg:text-8xl"
           >
             Asif Barakat
             <br />
-            <span className="text-cyan-400">Chowdhury</span>
+            <span className="serif text-acid">Chowdhury</span>
           </motion.h1>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="mt-5 h-8 font-mono text-lg text-slate-300 sm:text-xl"
-          >
-            <span className="text-cyan-400">&gt;</span> {typed}
-            <span className="ml-0.5 inline-block h-5 w-[2px] translate-y-0.5 animate-pulse bg-cyan-400" />
+          <motion.div {...fade(0.15)} className="mt-7 h-7 font-mono text-base text-bone sm:text-lg">
+            <span className="text-acid">&gt;</span> {typed}
+            <span className="ml-0.5 inline-block h-5 w-[9px] translate-y-1 animate-blink bg-acid" />
           </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.25 }}
-            className="mt-6 max-w-xl text-base leading-relaxed text-slate-400 sm:text-lg"
-          >
+          <motion.p {...fade(0.25)} className="mt-6 max-w-xl text-base leading-relaxed text-mute sm:text-lg">
             {profile.summary}
           </motion.p>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.35 }}
-            className="mt-8 flex flex-wrap items-center gap-3"
-          >
+          <motion.div {...fade(0.35)} className="mt-9 flex flex-wrap items-center gap-3">
             <a
               href="#projects"
-              className="group inline-flex items-center gap-2 rounded-xl bg-cyan-400 hover:bg-cyan-300 px-6 py-3 font-semibold text-slate-950 transition-colors shadow-sm"
+              className="group inline-flex items-center gap-2 rounded-full bg-acid px-6 py-3 font-semibold text-ink transition-transform hover:scale-[1.03]"
             >
               View my work
-              <FiArrowRight className="transition-transform group-hover:translate-x-1" />
+              <FiArrowUpRight className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center gap-2 rounded-xl border border-slate-700 px-6 py-3 font-semibold text-slate-200 transition-colors hover:border-cyan-400/50 hover:text-white"
+              className="rounded-full border border-line px-6 py-3 font-semibold text-bone transition-colors hover:border-acid hover:text-acid"
             >
-              <HiOutlineMail /> Get in touch
+              Get in touch
             </a>
-            <div className="ml-1 flex items-center gap-2">
-              <a
-                href={profile.socials.github}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="GitHub"
-                className="grid h-11 w-11 place-items-center rounded-xl border border-slate-700 text-slate-300 transition-colors hover:border-cyan-400/50 hover:text-white"
-              >
-                <FaGithub size={19} />
-              </a>
-              <a
-                href={profile.socials.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                aria-label="LinkedIn"
-                className="grid h-11 w-11 place-items-center rounded-xl border border-slate-700 text-slate-300 transition-colors hover:border-cyan-400/50 hover:text-white"
-              >
-                <FaLinkedinIn size={18} />
-              </a>
-            </div>
+            <a href={profile.socials.github} target="_blank" rel="noreferrer" aria-label="GitHub"
+              className="grid h-11 w-11 place-items-center rounded-full border border-line text-mute transition-colors hover:border-acid hover:text-acid">
+              <FaGithub size={18} />
+            </a>
+            <a href={profile.socials.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn"
+              className="grid h-11 w-11 place-items-center rounded-full border border-line text-mute transition-colors hover:border-acid hover:text-acid">
+              <FaLinkedinIn size={17} />
+            </a>
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="mt-6 flex items-center gap-2 text-sm text-slate-500"
-          >
+          <motion.div {...fade(0.45)} className="mt-7 flex items-center gap-2 font-mono text-xs text-mute">
             <FiMapPin /> {profile.location}
           </motion.div>
         </div>
 
-        {/* Right — terminal card + stats */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.94, y: 20 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.3 }}
-          className="animate-float-slow"
-        >
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/70 shadow-2xl backdrop-blur-sm">
-            {/* title bar */}
-            <div className="flex items-center gap-2 border-b border-slate-800 px-4 py-3">
-              <span className="h-3 w-3 rounded-full bg-red-400/80" />
-              <span className="h-3 w-3 rounded-full bg-yellow-400/80" />
-              <span className="h-3 w-3 rounded-full bg-green-400/80" />
-              <span className="ml-2 font-mono text-xs text-slate-500">asif@edge-node: ~</span>
-            </div>
-            {/* body */}
-            <pre className="overflow-x-auto p-5 font-mono text-[13px] leading-relaxed text-slate-300">
-<span className="text-slate-500"># quality engineering &amp; systems testing</span>{"\n"}
-<span className="text-violet-400">const</span> asif = {"{"}
-{"\n"}  role: <span className="text-emerald-400">"SQA Engineer Intern"</span>,
-{"\n"}  company: <span className="text-cyan-300">"AppifyLab"</span>,
-{"\n"}  target: <span className="text-violet-300">"Aspiring SDET"</span>,
-{"\n"}  stack: [<span className="text-cyan-300">"Playwright"</span>, <span className="text-cyan-300">"Postman"</span>, <span className="text-cyan-300">"k6"</span>, <span className="text-cyan-300">"Grafana"</span>],
-{"\n"}  testing: <span className="text-amber-300">"automated &amp; manual"</span>,
-{"\n"}{"}"};
-{"\n"}
-{"\n"}<span className="text-violet-400">await</span> asif.<span className="text-cyan-300">verifySystemQuality</span>();
-            </pre>
-          </div>
-
-          {/* stat strip */}
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2">
-            {profile.stats.map((s) => (
-              <div
-                key={s.label}
-                className="rounded-xl border border-slate-800 bg-slate-900/60 px-4 py-3 text-center"
-              >
-                <div className="text-2xl font-bold text-cyan-400">{s.value}</div>
-                <div className="mt-0.5 text-xs text-slate-500">{s.label}</div>
-              </div>
-            ))}
-          </div>
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3 }}>
+          <LiveConsole />
         </motion.div>
+      </div>
+
+      {/* stat strip */}
+      <div className="mx-auto mt-20 grid max-w-6xl grid-cols-2 border-y border-line md:grid-cols-4">
+        {profile.stats.map((s, i) => (
+          <div key={s.label} className={`px-6 py-7 ${i % 2 === 1 ? "border-l" : ""} ${i > 1 ? "border-t md:border-t-0" : ""} ${i > 0 ? "md:border-l" : ""} border-line`}>
+            <div className="text-4xl font-semibold tracking-tight text-bone">{s.value}</div>
+            <div className="mt-1 font-mono text-[11px] uppercase tracking-widest text-mute">{s.label}</div>
+          </div>
+        ))}
+      </div>
+
+      {/* tool marquee */}
+      <div className="mx-auto mt-0 max-w-6xl overflow-hidden border-b border-line py-5">
+        <div className="flex w-max animate-marquee gap-10">
+          {[...marqueeItems, ...marqueeItems].map((m, i) => (
+            <span key={i} className="flex items-center gap-10 font-mono text-sm uppercase tracking-widest text-mute">
+              {m} <span className="text-acid">/</span>
+            </span>
+          ))}
+        </div>
       </div>
     </section>
   );

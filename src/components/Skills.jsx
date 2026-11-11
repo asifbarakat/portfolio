@@ -1,24 +1,22 @@
-import { Section, Reveal, Tag, accentText } from "./ui";
+import { Section, Reveal, Tag } from "./ui";
 import { skillGroups } from "../data/portfolio";
 
 export default function Skills() {
   return (
-    <Section id="skills" index="02" eyebrow="what I work with" title="Skills & Stack">
-      <div className="grid gap-6 md:grid-cols-2">
+    <Section id="skills" index="02" eyebrow="what I work with" title="The" accent="toolchain.">
+      <div className="grid gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-2">
         {skillGroups.map((group, i) => (
-          <Reveal key={group.title} delay={i * 0.08}>
-            <div className="h-full rounded-2xl border border-slate-800 bg-slate-900/50 p-6 hover:border-slate-700 transition-colors">
-              <div className="mb-4 flex items-center gap-3">
-                <span className={`h-2.5 w-2.5 rounded-full ${accentDot[group.accent]}`} />
-                <h3 className={`font-semibold ${accentText[group.accent]}`}>
-                  {group.title}
-                </h3>
+          <Reveal key={group.title} delay={i * 0.06} className="bg-ink">
+            <div className="h-full bg-panel p-7 transition-colors hover:bg-raise">
+              <div className="mb-5 flex items-center justify-between">
+                <h3 className="font-semibold text-bone">{group.title}</h3>
+                <span className="font-mono text-xs text-acid">
+                  {String(group.items.length).padStart(2, "0")} items
+                </span>
               </div>
               <div className="flex flex-wrap gap-2">
                 {group.items.map((item) => (
-                  <Tag key={item} accent={group.accent}>
-                    {item}
-                  </Tag>
+                  <Tag key={item}>{item}</Tag>
                 ))}
               </div>
             </div>
@@ -28,9 +26,3 @@ export default function Skills() {
     </Section>
   );
 }
-
-const accentDot = {
-  cyan: "bg-cyan-400",
-  violet: "bg-violet-400",
-  emerald: "bg-emerald-400",
-};

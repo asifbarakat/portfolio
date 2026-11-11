@@ -1,87 +1,71 @@
 /* ==================================================================
  *  PORTFOLIO CONTENT
- *  ------------------------------------------------------------------
- *  This is the single source of truth for everything on the site.
- *  Edit the values below to update your portfolio — no component
- *  code needs to change.
+ *  Single source of truth for everything on the site.
  * ================================================================== */
 
 export const profile = {
   name: "Asif Barakat Chowdhury",
-  // Rotating roles shown in the hero (the typewriter effect cycles these)
   roles: [
     "SQA Engineer Intern @ AppifyLab",
-    "Aspiring SDET Engineer",
-    "Software Engineer",
-    "Performance Tester (k6 + Grafana)",
-    "Systems & AI Researcher",
+    "Aspiring SDET",
+    "Web & Mobile Test Automation",
+    "Load & Performance Testing",
   ],
-  tagline:
-    "SQA Engineer Intern @ AppifyLab  ·  Aspiring SDET  ·  Software Engineer & Systems Researcher",
+  tagline: "SQA Engineer Intern @ AppifyLab  //  CSE Graduate @ Leading University",
   summary:
-    "SQA Engineer Intern at AppifyLab and aspiring SDET. I specialize in comprehensive quality assurance, end-to-end automation with Playwright, API testing via Postman, and high-concurrency load/performance benchmarking using k6 and Grafana, alongside strong foundations in software systems and distributed AI.",
+    "I make software reliable, scalable and fast under real-world load. My day-to-day is end-to-end web and mobile automation, API validation and performance engineering, backed by a computer science degree and hands-on work in cross-platform apps and edge systems.",
   location: "Sylhet, Bangladesh",
   email: "asifbarakat2001@gmail.com",
   socials: {
     github: "https://github.com/asifbarakat",
     linkedin: "https://www.linkedin.com/in/asif-barakat-4087a8253",
   },
-  // Quick headline stats for the hero strip
   stats: [
     { value: "3.8", label: "CGPA · BSc CSE" },
-    { value: "SQA", label: "Intern @ AppifyLab" },
+    { value: "6", label: "QA tools in daily use" },
     { value: "4+", label: "Shipped projects" },
-    { value: "1", label: "IEEE publication" },
+    { value: "SQA", label: "Intern @ AppifyLab" },
   ],
 };
 
-/* ---- EXPERIENCE -------------------------------------------------- */
 export const experience = {
   role: "SQA Engineer Intern",
   company: "AppifyLab",
   period: "Present",
   description:
-    "Executing manual & exploratory testing, authoring end-to-end automation test suites with Playwright, verifying RESTful APIs via Postman, and benchmarking performance under concurrency with k6 and Grafana telemetry dashboards.",
+    "Verifying production workflows across web, mobile and API layers: authoring Playwright and Appium suites, validating REST APIs in Postman, and benchmarking behaviour under concurrency with Grafana k6.",
   highlights: [
-    "Manual & Exploratory Testing",
-    "Playwright E2E Automation",
-    "Postman API Validation",
-    "k6 + Grafana Load Testing",
-    "Regression & Defect Lifecycle",
+    "Playwright E2E (TypeScript)",
+    "Appium mobile automation",
+    "Postman API validation",
+    "Grafana k6 load testing",
+    "Regression & defect lifecycle",
   ],
 };
 
-/* ---- PUBLICATION ------------------------------------------------- */
-export const publication = {
-  // TODO: replace with the exact paper title from IEEE Xplore.
-  title: "Peer-Reviewed Research Publication",
-  venue: "IEEE Xplore",
-  url: "https://doi.org/10.1109/qpain69676.2026.11546109",
-};
-
 export const education = {
-  // NOTE: confirm the institution name / graduation year and update if needed.
   degree: "BSc in Computer Science & Engineering",
   institution: "Leading University",
   detail: "CGPA 3.8 / 4.0",
-  note: "Focus: systems architecture, edge AI, and distributed computing.",
+  note: "Focus: software engineering, systems and distributed computing.",
 };
 
 /* ---- SKILLS ------------------------------------------------------ */
 export const skillGroups = [
   {
-    title: "SQA, Automation & Testing",
+    title: "Quality Engineering",
     accent: "emerald",
     items: [
-      "Manual Testing",
       "Playwright",
+      "Appium",
       "Postman",
-      "k6",
-      "Grafana",
+      "Grafana k6",
+      "Chrome DevTools",
+      "GitHub Actions",
+      "Manual Testing",
       "API Testing",
-      "E2E Automation",
       "Regression Testing",
-      "Performance & Load Testing",
+      "Performance Testing",
       "Test Case Design",
       "Defect Tracking",
     ],
@@ -89,139 +73,94 @@ export const skillGroups = [
   {
     title: "Languages & Frameworks",
     accent: "cyan",
-    items: [
-      "Python",
-      "JavaScript",
-      "Dart",
-      "Flutter",
-      "React",
-      "C",
-      "C++",
-      "SQL",
-      "PHP",
-      "Tailwind CSS",
-    ],
+    items: ["TypeScript", "JavaScript", "Python", "Dart", "Flutter", "React", "C", "C++", "SQL", "PHP"],
   },
   {
-    title: "AI, ML & Systems Research",
+    title: "Systems & Edge",
     accent: "violet",
     items: [
+      "Linux",
+      "Raspberry Pi 5",
+      "Docker",
+      "Git",
       "Split Computing",
-      "Zero-Parameter Compression",
-      "Sparsity Thresholding",
-      "Model Quantization",
-      "Layer Partitioning",
       "Distributed Inference",
-      "Auto-Regressive Decoding",
-      "Llama",
-      "Qwen",
-      "YOLO",
+      "P2P Networking",
       "OpenCV",
+      "YOLO",
     ],
   },
   {
-    title: "Systems, Tools & DevOps",
+    title: "Platforms & Tooling",
     accent: "cyan",
-    items: [
-      "Docker",
-      "Git",
-      "Offline P2P Networks",
-      "Local Device Discovery",
-      "Microservices",
-      "Raspberry Pi 5",
-      "Hardware-in-the-Loop",
-      "Figma",
-    ],
+    items: ["Firebase", "Supabase", "MySQL", "VS Code", "Android Studio", "Figma"],
   },
 ];
 
-/* ---- RESEARCH ---------------------------------------------------- */
+/* ---- RESEARCH / SYSTEMS WORK ------------------------------------- */
 export const research = [
   {
-    kind: "Academic Thesis",
-    title:
-      "When Zero-Parameter Split Computing Wins: A Training-Free Split-Feasibility Screen for Feature Transmission in CPU-Only IoT Surveillance",
+    kind: "Systems Research",
+    title: "Adaptive Split Computing & Feature Extraction",
     description:
-      "Formulated and validated a training-free feasibility screen and zero-parameter compression pipeline enabling highly efficient, low-latency intermediate feature transmission across resource-constrained, CPU-only edge environments — without learned bottlenecks.",
+      "Distributed edge-to-host inference runtime that benchmarks intermediate feature extraction, zero-parameter compression and live handoff resilience across Raspberry Pi 5 nodes and desktop RPC servers.",
     contributions: [
       {
         head: "Zero-Parameter Compression",
-        body: "A zero-parameter operator leveraging sparsity thresholding and quantization to compress intermediate feature maps while preserving downstream detection fidelity — no retraining overhead.",
+        body: "Sparsity thresholding and quantization compress intermediate feature maps with no retraining overhead.",
       },
       {
-        head: "Training-Free Feasibility Screen",
-        body: "An evaluation framework based on high-resolution backbone channel width to rapidly identify optimal layer partition points.",
+        head: "Hardware-in-the-Loop",
+        body: "End-to-end split inference benchmarked on physical CPU-only Raspberry Pi 5 edge nodes.",
       },
       {
-        head: "Hardware-in-the-Loop Validation",
-        body: "Deployed and benchmarked the end-to-end split-inference pipeline on physical CPU-only edge nodes (Raspberry Pi 5), measuring uplink bandwidth reduction versus local inference latency.",
+        head: "Handoff Resilience",
+        body: "Measured uplink bandwidth reduction against local inference latency across the RPC boundary.",
       },
     ],
-    stack: ["Python", "Raspberry Pi 5", "Edge AI", "Model Quantization", "Computer Vision"],
-  },
-  {
-    kind: "Standalone Research",
-    title: "Distributed Edge-to-Server LLM Split Inference",
-    description:
-      "Investigating partition paradigms and performance bottlenecks specific to executing open-weights Large Language Models (Llama, Qwen) across distributed edge–server topologies.",
-    contributions: [
-      {
-        head: "Communication Overhead",
-        body: "Mitigating the overhead inherent to token-by-token auto-regressive decoding across the network boundary.",
-      },
-      {
-        head: "KV-Cache Partitioning",
-        body: "Optimizing Key-Value cache partitioning and memory footprints across resource-constrained edge hardware.",
-      },
-      {
-        head: "Dynamic Offloading",
-        body: "Managing sequence-length scaling and dynamic workload offloading without degrading generation consistency.",
-      },
-    ],
-    stack: ["Python", "Llama", "Qwen", "Distributed Inference", "Transformers"],
+    stack: ["Python", "PyTorch", "Raspberry Pi 5", "RPC", "Embedded Linux"],
   },
 ];
 
 /* ---- PROJECTS ---------------------------------------------------- */
 export const projects = [
   {
+    name: "Multi-Product E2E & Automation Suite",
+    badge: "AppifyLab",
+    description:
+      "Automated web, mobile, API and stress-testing architecture for production workflows.",
+    features:
+      "Verifies complex user journeys, database states and load thresholds across multiple products.",
+    stack: ["Playwright", "Appium", "TypeScript", "Grafana k6", "Postman", "CI/CD"],
+    featured: true,
+  },
+  {
     name: "DigitalDelta",
     badge: "Hackathon",
     description:
-      "A rapid-prototyped, decentralized, cloud-independent communication app built under intense hackathon constraints.",
+      "Offline peer-to-peer disaster-response communication app for zero-internet emergencies.",
     features:
-      "Offline peer-to-peer local network for real-time data transmission, automated zero-config device discovery, and custom-managed localized permissions — no external servers or internet required.",
-    stack: ["Flutter", "Dart", "Local Networking"],
+      "Zero-config device discovery, real-time data transmission and localized permissions, with no external servers.",
+    stack: ["Flutter", "Dart", "P2P Networking", "Offline-First"],
     featured: true,
   },
   {
     name: "CodeSentrix",
     badge: "EdTech",
     description:
-      "An educational-technology app delivering end-to-end computer science education.",
-    features:
-      "Architected and wrote the complete technical curriculum alongside interactive features — real-time algorithm visualizers and integrated coding challenges — and prepared deployment workflows.",
-    stack: ["Flutter", "Dart"],
-    featured: true,
+      "Interactive computer science learning platform with algorithm visualizers and coding challenges.",
+    features: "Authored the full technical curriculum and shipped deployment workflows.",
+    stack: ["Flutter", "Dart", "Mobile App", "Visualizers"],
+    featured: false,
   },
   {
     name: "Schema Extraction via CV",
     badge: "Computer Vision",
     description:
-      "A computer-vision engineering project that converts static database diagrams into structured data.",
+      "Pipeline that converts static database diagrams into structured relational models.",
     features:
-      "Trained and deployed custom YOLO object-detection models with OpenCV image processing to identify, segment, and extract relational database structures from raw visual diagrams.",
+      "Custom YOLO detection plus OpenCV processing to identify and extract tables and relations.",
     stack: ["Python", "YOLO", "OpenCV"],
-    featured: false,
-  },
-  {
-    name: "MagicScribe",
-    badge: "Mobile · OCR",
-    description:
-      "A mobile app with built-in OCR for extracting editable text from photos and documents.",
-    features:
-      "Integrates Tesseract OCR into a Flutter app — capture or pick an image and pull structured text out of it, backed by Firebase accounts.",
-    stack: ["Flutter", "Dart", "Tesseract OCR", "Firebase"],
     featured: false,
   },
 ];
@@ -230,7 +169,7 @@ export const projects = [
 export const navLinks = [
   { id: "about", label: "About" },
   { id: "skills", label: "Skills" },
-  { id: "research", label: "Research" },
+  { id: "research", label: "Systems" },
   { id: "projects", label: "Projects" },
   { id: "contact", label: "Contact" },
 ];

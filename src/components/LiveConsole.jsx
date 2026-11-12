@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 const rows = [
   { label: "e2e_playwright", start: 0, width: 46, ms: "412ms" },
@@ -17,9 +17,18 @@ export default function LiveConsole() {
   const [series, setSeries] = useState(() => Array.from({ length: N }, () => 52));
   const [checks, setChecks] = useState(0);
   const t = useRef(0);
+  const reduce = useReducedMotion();
 
   useEffect(() => {
+    /* Reduced motion: show one steady snapshot instead of a live feed */
+    if (reduce) {
+      setVus(500);
+      setSeries(Array.from({ length: N }, (_, i) => 66 + Math.sin(i / 3) * 4));
+      setChecks(12840);
+      return;
+    }
     const id = setInterval(() => {
+      if (document.hidden) return; /* pause when the tab is in the background */
       t.current += 1;
       const phase = t.current % 140;
       const target =
@@ -32,7 +41,7 @@ export default function LiveConsole() {
       setChecks((c) => c + Math.round(2 + target / 40));
     }, 250);
     return () => clearInterval(id);
-  }, []);
+  }, [reduce]);
 
   const p95 = Math.round(series[series.length - 1]);
   const y = (v) => 40 - ((v - 30) / 90) * 40;
@@ -40,16 +49,22 @@ export default function LiveConsole() {
   const ok = p95 < SLA;
 
   return (
-    <div className="ticks rounded-xl border border-line bg-panel">
+    <div
+      role="img"
+      aria-label="Illustrative load-test dashboard: virtual users, P95 latency against a 100 millisecond SLA, and a test waterfall"
+      className="ticks rounded-xl border border-line bg-panel"
+    >
       {/* title bar */}
-      <div className="flex items-center justify-between border-b border-line px-4 py-3">
-        <div className="flex items-center gap-2">
-          <span className="h-2.5 w-2.5 rounded-full bg-line" />
-          <span className="h-2.5 w-2.5 rounded-full bg-line" />
-          <span className="h-2.5 w-2.5 rounded-full bg-line" />
-          <span className="ml-3 font-mono text-xs text-mute">$ k6 run --vus 500 checkout.js</span>
+      <div className="flex items-center justify-between gap-2 border-b border-line px-4 py-3">
+        <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
+          <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-line" />
+          <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-line" />
+          <span className="h-2.5 w-2.5 shrink-0 rounded-full bg-line" />
+          <span className="ml-1.5 min-w-0 truncate font-mono text-[11px] text-mute sm:ml-3 sm:text-xs">
+            $ k6 run --vus 500 checkout.js
+          </span>
         </div>
-        <span className="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-widest text-acid">
+        <span className="inline-flex shrink-0 items-center gap-1.5 font-mono text-[11px] uppercase tracking-widest text-acid">
           <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-acid" /> live
         </span>
       </div>
@@ -63,7 +78,7 @@ export default function LiveConsole() {
 
       {/* sparkline */}
       <div className="border-b border-line px-4 py-4">
-        <div className="mb-2 flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-mute">
+        <div className="mb-2 flex items-center justify-between font-mono text-[11px] uppercase tracking-widest text-mute">
           <span>p95 over time</span>
           <span className="text-fail">sla {SLA}ms</span>
         </div>
@@ -82,16 +97,16 @@ export default function LiveConsole() {
               <motion.div
                 className="absolute top-0 h-2 origin-left rounded-full bg-acid"
                 style={{ left: `${r.start}%`, width: `${r.width}%` }}
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: [0, 1, 1, 0] }}
-                transition={{ duration: 6, times: [0, 0.3, 0.88, 1], repeat: Infinity, delay: i * 0.45, ease: "easeOut" }}
+                initial={{ scaleX: reduce ? 1 : 0 }}
+                animate={reduce ? { scaleX: 1 } : { scaleX: [0, 1, 1, 0] }}
+                transition={reduce ? { duration: 0 } : { duration: 6, times: [0, 0.3, 0.88, 1], repeat: Infinity, delay: i * 0.45, ease: "easeOut" }}
               />
             </div>
             <span className="text-right font-mono text-[11px] text-bone">{r.ms}</span>
           </div>
         ))}
       </div>
-      <p className="border-t border-line px-4 py-2 font-mono text-[10px] text-mute">
+      <p className="border-t border-line px-4 py-2 font-mono text-[11px] text-mute">
         demo telemetry · illustrative values
       </p>
     </div>
@@ -103,7 +118,7 @@ function Metric({ label, value, tone }) {
   return (
     <div className="px-4 py-3">
       <div className={`font-mono text-2xl font-semibold tabular-nums ${color}`}>{value}</div>
-      <div className="mt-0.5 font-mono text-[10px] uppercase tracking-widest text-mute">{label}</div>
+      <div className="mt-0.5 font-mono text-[11px] uppercase tracking-widest text-mute">{label}</div>
     </div>
   );
 }

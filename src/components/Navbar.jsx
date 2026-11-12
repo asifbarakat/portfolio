@@ -24,7 +24,7 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="fixed inset-x-0 top-4 z-50 flex justify-center px-4"
     >
-      <nav className="flex w-full max-w-3xl items-center justify-between rounded-full border border-line bg-ink/80 py-2 pl-3 pr-2 backdrop-blur-xl">
+      <nav aria-label="Primary" className="flex w-full max-w-3xl items-center justify-between rounded-full border border-line bg-ink/80 py-2 pl-3 pr-2 backdrop-blur-xl">
         <a href="#top" aria-label="Home" className="flex items-center gap-2 font-mono text-sm font-bold text-bone">
           <span className="grid h-8 w-8 place-items-center rounded-full bg-acid text-xs font-black text-ink">AB</span>
           <span className="hidden sm:inline">asif.barakat</span>

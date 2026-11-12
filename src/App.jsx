@@ -1,4 +1,4 @@
-import { motion, useScroll, useSpring } from "framer-motion";
+import { motion, useScroll, useSpring, MotionConfig } from "framer-motion";
 import Background from "./components/Background";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
@@ -18,9 +18,15 @@ export default function App() {
   });
 
   return (
-    <>
-      {/* scroll progress bar */}
+    /* reducedMotion="user" disables transform animations for people who
+       set "reduce motion" in their OS. */
+    <MotionConfig reducedMotion="user">
+      <a href="#main" className="skip-link">
+        Skip to content
+      </a>
+
       <motion.div
+        aria-hidden="true"
         style={{ scaleX }}
         className="fixed inset-x-0 top-0 z-[60] h-[2px] origin-left bg-acid"
       />
@@ -28,7 +34,7 @@ export default function App() {
       <Background />
       <Navbar />
 
-      <main>
+      <main id="main">
         <Hero />
         <About />
         <Skills />
@@ -38,6 +44,6 @@ export default function App() {
       </main>
 
       <Footer />
-    </>
+    </MotionConfig>
   );
 }

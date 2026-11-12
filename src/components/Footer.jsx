@@ -8,7 +8,7 @@ export default function Footer() {
           <span className="grid h-7 w-7 place-items-center rounded-full bg-acid text-[10px] font-black text-ink">AB</span>
           {profile.name}
         </div>
-        <nav className="flex flex-wrap justify-center gap-x-5 gap-y-2 font-mono text-xs uppercase tracking-wider text-mute">
+        <nav aria-label="Footer" className="flex flex-wrap justify-center gap-x-5 gap-y-2 font-mono text-xs uppercase tracking-wider text-mute">
           {navLinks.map((l) => (
             <a key={l.id} href={`#${l.id}`} className="transition-colors hover:text-acid">
               {l.label}

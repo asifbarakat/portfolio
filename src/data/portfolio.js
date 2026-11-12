@@ -118,7 +118,13 @@ export const research = [
         body: "Measured uplink bandwidth reduction against local inference latency across the RPC boundary.",
       },
     ],
-    stack: ["Python", "PyTorch", "Raspberry Pi 5", "RPC", "Embedded Linux"],
+    metrics: [
+      { value: "89%", label: "smaller payload than the raw frame (700 KB vs 6.2 MB)" },
+      { value: "39.4ms", label: "cloud-side inference vs 71.7ms for the full model" },
+      { value: "99.9%", label: "of detections preserved" },
+    ],
+    href: "https://github.com/asifbarakat/sfp-split-computing-viability",
+    stack: ["Python", "PyTorch", "YOLOv8", "Raspberry Pi 5", "Embedded Linux"],
   },
 ];
 
@@ -133,6 +139,16 @@ export const projects = [
       "Verifies complex user journeys, database states and load thresholds across multiple products.",
     stack: ["Playwright", "Appium", "TypeScript", "Grafana k6", "Postman", "CI/CD"],
     featured: true,
+  },
+  {
+    name: "Playwright Purchase-Flow Suite",
+    badge: "System Testing",
+    description: "End-to-end Playwright and TypeScript suite for a purchase flow.",
+    features:
+      "Public repo with a shared Playwright config and separate pages/ and tests/ folders.",
+    stack: ["Playwright", "TypeScript"],
+    href: "https://github.com/asifbarakat/system-testing-deliverables",
+    featured: false,
   },
   {
     name: "DigitalDelta",

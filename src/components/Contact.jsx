@@ -19,12 +19,12 @@ export default function Contact() {
 
         <a
           href={`mailto:${profile.email}`}
-          className="group mt-10 flex items-center justify-between gap-4 border-y border-line py-6 transition-colors hover:border-acid"
+          className="group mt-10 flex items-center justify-between gap-3 border-y border-line py-6 transition-colors hover:border-acid"
         >
-          <span className="break-all text-2xl font-semibold tracking-tight text-bone transition-colors group-hover:text-acid sm:text-4xl">
+          <span className="min-w-0 break-all text-[19px] font-semibold tracking-tight text-bone transition-colors group-hover:text-acid sm:text-3xl md:text-4xl">
             {profile.email}
           </span>
-          <FiArrowUpRight className="shrink-0 text-mute transition-all group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-acid" size={36} />
+          <FiArrowUpRight aria-hidden="true" className="shrink-0 text-mute transition-all group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-acid" size={32} />
         </a>
 
         <div className="mt-8 flex flex-wrap gap-3">

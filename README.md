@@ -8,10 +8,10 @@ A fast, animated single-page portfolio built with **React 19 + Vite + Tailwind C
 
 ## ✨ Highlights
 
-- Systems & AI research (split computing, edge AI, distributed LLM inference)
-- Featured software projects
-- Competitive programming
-- Fully responsive, dark-themed, animated
+- SQA & SDET portfolio with live k6-style telemetry demo console
+- Featured testing & software engineering projects (E2E suites, offline P2P mesh, desktop tools)
+- Systems research highlight: Adaptive Split Computing & Feature Extraction with reproducible metrics
+- Responsive layout, keyboard focus navigation, Open Graph preview card, and `prefers-reduced-motion` support
 
 ## 🛠 Tech Stack
 

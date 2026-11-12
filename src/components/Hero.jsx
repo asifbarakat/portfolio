@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { FaGithub, FaLinkedinIn } from "react-icons/fa";
 import { FiArrowUpRight, FiMapPin } from "react-icons/fi";
 import { profile } from "../data/portfolio";
@@ -10,12 +10,13 @@ const marqueeItems = [
   "TypeScript", "Python", "Flutter", "Docker", "Linux", "Raspberry Pi 5",
 ];
 
-function useTypewriter(words, { typeSpeed = 60, deleteSpeed = 30, pause = 1500 } = {}) {
+function useTypewriter(words, { typeSpeed = 60, deleteSpeed = 30, pause = 1500, still = false } = {}) {
   const [text, setText] = useState("");
   const [i, setI] = useState(0);
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
+    if (still) return;
     const word = words[i % words.length];
     let timeout;
     if (!deleting && text === word) timeout = setTimeout(() => setDeleting(true), pause);
@@ -29,24 +30,25 @@ function useTypewriter(words, { typeSpeed = 60, deleteSpeed = 30, pause = 1500 }
       );
     }
     return () => clearTimeout(timeout);
-  }, [text, deleting, i, words, typeSpeed, deleteSpeed, pause]);
+  }, [text, deleting, i, words, typeSpeed, deleteSpeed, pause, still]);
 
-  return text;
+  return still ? words[0] : text;
 }
 
 const fade = (delay) => ({
-  initial: { opacity: 0, y: 24 },
+  initial: { opacity: 0, y: 12 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, delay },
+  transition: { duration: 0.38, delay },
 });
 
 export default function Hero() {
-  const typed = useTypewriter(profile.roles);
+  const reduce = useReducedMotion();
+  const typed = useTypewriter(profile.roles, { still: reduce });
 
   return (
     <section id="top" className="relative px-6 pt-36 pb-10">
       <div className="mx-auto grid w-full max-w-6xl items-center gap-14 lg:grid-cols-[1.1fr_0.9fr]">
-        <div>
+        <div className="min-w-0">
           <motion.div
             {...fade(0)}
             className="mb-8 inline-flex items-center gap-2 rounded-full border border-line bg-panel px-4 py-1.5 font-mono text-xs text-mute"
@@ -59,7 +61,7 @@ export default function Hero() {
           </motion.div>
 
           <motion.h1
-            {...fade(0.05)}
+            {...fade(0.03)}
             className="text-5xl font-semibold leading-[0.98] tracking-tighter text-bone sm:text-7xl lg:text-8xl"
           >
             Asif Barakat
@@ -67,16 +69,16 @@ export default function Hero() {
             <span className="serif text-acid">Chowdhury</span>
           </motion.h1>
 
-          <motion.div {...fade(0.15)} className="mt-7 h-7 font-mono text-base text-bone sm:text-lg">
+          <motion.div {...fade(0.06)} className="mt-7 h-7 font-mono text-base text-bone sm:text-lg">
             <span className="text-acid">&gt;</span> {typed}
             <span className="ml-0.5 inline-block h-5 w-[9px] translate-y-1 animate-blink bg-acid" />
           </motion.div>
 
-          <motion.p {...fade(0.25)} className="mt-6 max-w-xl text-base leading-relaxed text-mute sm:text-lg">
+          <motion.p {...fade(0.1)} className="mt-6 max-w-xl text-base leading-relaxed text-mute sm:text-lg">
             {profile.summary}
           </motion.p>
 
-          <motion.div {...fade(0.35)} className="mt-9 flex flex-wrap items-center gap-3">
+          <motion.div {...fade(0.14)} className="mt-9 flex flex-wrap items-center gap-3">
             <a
               href="#projects"
               className="group inline-flex items-center gap-2 rounded-full bg-acid px-6 py-3 font-semibold text-ink transition-transform hover:scale-[1.03]"
@@ -100,12 +102,17 @@ export default function Hero() {
             </a>
           </motion.div>
 
-          <motion.div {...fade(0.45)} className="mt-7 flex items-center gap-2 font-mono text-xs text-mute">
+          <motion.div {...fade(0.18)} className="mt-7 flex items-center gap-2 font-mono text-xs text-mute">
             <FiMapPin /> {profile.location}
           </motion.div>
         </div>
 
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.3 }}>
+        <motion.div
+          className="min-w-0"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.12 }}
+        >
           <LiveConsole />
         </motion.div>
       </div>
@@ -121,7 +128,7 @@ export default function Hero() {
       </div>
 
       {/* tool marquee */}
-      <div className="mx-auto mt-0 max-w-6xl overflow-hidden border-b border-line py-5">
+      <div aria-hidden="true" className="mx-auto mt-0 max-w-6xl overflow-hidden border-b border-line py-5">
         <div className="flex w-max animate-marquee gap-10">
           {[...marqueeItems, ...marqueeItems].map((m, i) => (
             <span key={i} className="flex items-center gap-10 font-mono text-sm uppercase tracking-widest text-mute">

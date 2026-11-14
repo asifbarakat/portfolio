@@ -5,16 +5,18 @@
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
   --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
 
-  --color-ink: #09090b;
+  /* Pokémon Black & White monochrome foundation + acid-lime finishing spark */
+  --color-ink: #08080a;
   --color-panel: #101013;
-  --color-raise: #16161a;
-  --color-line: #232329;
-  --color-mute: #8a8a93;
-  --color-bone: #ececea;
+  --color-raise: #18181d;
+  --color-line: #27272e;
+  --color-ash: #52525b;
+  --color-mute: #a1a1aa;
+  --color-bone: #f4f4f5;
+  --color-chalk: #ffffff;
   --color-acid: #c8f542;
-  --color-fail: #ff5c5c;
 
-  --animate-marquee: marquee 38s linear infinite;
+  --animate-marquee: marquee 34s linear infinite;
   --animate-blink: blink 1s step-end infinite;
 }
 
@@ -27,8 +29,7 @@
 }
 
 html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 6rem;
+  scroll-padding-top: 4rem;
 }
 
 body {
@@ -41,19 +42,18 @@ body {
 
 ::selection {
   background: var(--color-acid);
-  color: #09090b;
+  color: var(--color-ink);
 }
 
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: var(--color-ink); }
-::-webkit-scrollbar-thumb { background: #26262c; border-radius: 9999px; }
-::-webkit-scrollbar-thumb:hover { background: #3a3a42; }
+::-webkit-scrollbar-thumb { background: #27272e; }
+::-webkit-scrollbar-thumb:hover { background: #52525b; }
 
-/* Keyboard focus: always visible */
+/* Keyboard focus */
 :focus-visible {
   outline: 2px solid var(--color-acid);
   outline-offset: 3px;
-  border-radius: 6px;
 }
 
 /* Skip link: hidden until focused */
@@ -69,23 +69,18 @@ body {
   font-size: 13px;
   font-weight: 700;
   padding: 10px 16px;
-  border-radius: 9999px;
 }
 .skip-link:focus { transform: translateY(0); }
 
-/* Respect the OS "reduce motion" setting */
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   .animate-marquee,
   .animate-blink,
   .animate-ping,
-  .animate-pulse,
-  .animate-float {
+  .animate-pulse {
     animation: none !important;
   }
 }
 
-/* Editorial accent: serif italic */
 .serif {
   font-family: var(--font-serif);
   font-style: italic;
@@ -93,23 +88,35 @@ body {
   letter-spacing: -0.01em;
 }
 
-/* Outlined numeral used in section headers */
 .outline-num {
   -webkit-text-stroke: 1px var(--color-line);
   color: transparent;
 }
 
-/* Film grain for depth without any gradient */
+/* Gen-5 / Unova geometric chamfers */
+.chamfer {
+  clip-path: polygon(12px 0, 100% 0, 100% calc(100% - 12px), calc(100% - 12px) 100%, 0 100%, 0 12px);
+}
+.chamfer-sm {
+  clip-path: polygon(7px 0, 100% 0, 100% calc(100% - 7px), calc(100% - 7px) 100%, 0 100%, 0 7px);
+}
+
+/* Monochrome pixel-dither surface texture (pure pattern, zero gradients) */
+.dither {
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='6' height='6'><rect x='0' y='0' width='1' height='1' fill='%23ffffff' fill-opacity='0.06'/><rect x='3' y='3' width='1' height='1' fill='%23ffffff' fill-opacity='0.06'/></svg>");
+}
+
+/* Subtle LCD pixel grain */
 .grain {
   position: fixed;
   inset: 0;
   z-index: 70;
   pointer-events: none;
-  opacity: 0.045;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='4' height='4'><rect x='0' y='0' width='1' height='1' fill='%23ffffff'/><rect x='2' y='2' width='1' height='1' fill='%23ffffff'/></svg>");
 }
 
-/* Crosshair corner ticks on panels */
+/* Crosshair corner ticks */
 .ticks { position: relative; }
 .ticks::before,
 .ticks::after {
@@ -117,8 +124,8 @@ body {
   position: absolute;
   font-family: var(--font-mono);
   font-size: 12px;
-  color: var(--color-mute);
+  color: var(--color-acid);
   line-height: 1;
 }
-.ticks::before { top: -7px; left: -4px; }
-.ticks::after { bottom: -7px; right: -4px; }
+.ticks::before { top: -8px; left: -5px; }
+.ticks::after { bottom: -8px; right: -5px; }

@@ -1,6 +1,10 @@
+import { useEffect } from "react";
+import Lenis from "lenis";
+import "lenis/dist/lenis.css";
 import { motion, useScroll, useSpring, MotionConfig } from "framer-motion";
 import Background from "./components/Background";
 import Navbar from "./components/Navbar";
+import Dock from "./components/Dock";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Skills from "./components/Skills";
@@ -12,14 +16,23 @@ import Footer from "./components/Footer";
 export default function App() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
-    stiffness: 120,
+    stiffness: 140,
     damping: 30,
     restDelta: 0.001,
   });
 
+  useEffect(() => {
+    const lenis = new Lenis({
+      autoRaf: true,
+      lerp: 0.09,
+      smoothWheel: true,
+      anchors: { offset: -24 },
+      respectReducedMotion: true,
+    });
+    return () => lenis.destroy();
+  }, []);
+
   return (
-    /* reducedMotion="user" disables transform animations for people who
-       set "reduce motion" in their OS. */
     <MotionConfig reducedMotion="user">
       <a href="#main" className="skip-link">
         Skip to content
@@ -44,6 +57,7 @@ export default function App() {
       </main>
 
       <Footer />
+      <Dock />
     </MotionConfig>
   );
 }

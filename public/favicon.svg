@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
-  <rect width="64" height="64" rx="16" fill="#09090b"/>
-  <rect x="1.5" y="1.5" width="61" height="61" rx="14.5" fill="none" stroke="#232329" stroke-width="1.5"/>
-  <text x="50%" y="53%" dominant-baseline="middle" text-anchor="middle"
-        font-family="'JetBrains Mono', monospace" font-weight="700" font-size="30" fill="#c8f542">A</text>
-  <circle cx="47" cy="19" r="3" fill="#c8f542"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" rx="14" fill="#08080a" />
+  <polygon points="10,4 54,4 60,10 60,54 54,60 10,60 4,54 4,10" fill="#101013" stroke="#c8f542" stroke-opacity="0.55" stroke-width="2" />
+  <polygon points="32,16 48,48 40.5,48 37.2,40.5 26.8,40.5 23.5,48 16,48" fill="#ffffff" />
+  <polygon points="32,25.5 28.8,34 35.2,34" fill="#c8f542" />
 </svg>

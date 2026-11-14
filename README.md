@@ -8,8 +8,8 @@ A fast, animated single-page portfolio built with **React 19 + Vite + Tailwind C
 
 ## ✨ Highlights
 
-- SQA & SDET portfolio with live k6-style telemetry demo console
-- Featured testing & software engineering projects (E2E suites, offline P2P mesh, desktop tools)
+- Monochrome Black & White + `#c8f542` acid-lime kinetic UI with spring-repulsion typography, `@chenglou/pretext` drawer measurement, and variable-font proximity
+- Security/network margin token field on desktop + perimeter telemetry rail on phones, tactile magnifying dock, `Lenis` inertial scrolling, and `@number-flow/react` live metrics
 - Systems research highlight: Adaptive Split Computing & Feature Extraction with reproducible metrics
 - Responsive layout, keyboard focus navigation, Open Graph preview card, and `prefers-reduced-motion` support
 
@@ -20,7 +20,10 @@ A fast, animated single-page portfolio built with **React 19 + Vite + Tailwind C
 | Vite 7 | Build tool & dev server |
 | React 19 | UI library |
 | Tailwind CSS v4 | Styling (utility classes) |
-| Framer Motion | Animations |
+| Framer Motion | Animations & spring docks |
+| `@chenglou/pretext` | Zero-reflow 120fps text layout |
+| `@number-flow/react` | Smooth spinning telemetry numbers |
+| `lenis` | Inertial smooth scrolling |
 | react-icons | Icons |
 
 ## 🚀 Getting Started

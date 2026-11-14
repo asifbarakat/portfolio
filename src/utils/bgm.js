@@ -39,6 +39,7 @@ let playing = true; // default ON; starts immediately if permitted or upon first
 let engine = null;
 let armed = false;
 let watchedAc = null;
+let autoResumeAttempted = false;
 const listeners = new Set();
 
 function resolveSeqCtor() {
@@ -315,6 +316,20 @@ export function armDefaultBgm() {
     return;
   }
   armUnlockListeners();
+  // Attempt one upfront resume in case browser MEI/site permissions allow immediate playback on refresh
+  if (!autoResumeAttempted) {
+    autoResumeAttempted = true;
+    try {
+      const p = ac.resume();
+      if (p && typeof p.then === "function") {
+        p.then(() => {
+          if (playing) tryStartSync();
+        }).catch(() => {});
+      }
+    } catch {
+      // Blocked by browser autoplay policy; unlock listeners stay armed for first click/tap/key
+    }
+  }
   notify();
 }
 

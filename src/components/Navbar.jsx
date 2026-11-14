@@ -121,13 +121,16 @@ export default function Navbar() {
             className={`inline-flex h-8 cursor-pointer items-center gap-1.5 border px-2 font-mono text-[10px] uppercase tracking-wider transition-colors active:scale-95 chamfer-sm sm:px-2.5 sm:text-[10.5px] ${
               bgmOn
                 ? bgmWaiting
-                  ? "border-acid/55 bg-panel text-acid/85 hover:border-acid hover:text-acid"
+                  ? "border-line bg-panel text-chalk hover:border-acid hover:text-acid"
                   : "border-acid bg-panel text-acid"
                 : "border-line bg-panel text-mute hover:border-ash hover:text-chalk"
             }`}
           >
             <EqBars active={bgmOn} waiting={bgmWaiting} reduce={Boolean(reduce)} />
             <span>BGM</span>
+            {bgmOn && bgmWaiting && (
+              <span className="hidden text-[9px] text-acid sm:inline">· CLICK</span>
+            )}
           </button>
           <button
             type="button"

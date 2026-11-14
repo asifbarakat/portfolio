@@ -11,6 +11,7 @@ export default defineConfig({
         manualChunks: {
           motion: ["framer-motion"],
           kinetic: ["@chenglou/pretext", "@number-flow/react", "lenis"],
+          craft: ["d3-delaunay", "zdog", "zzfx", "tinymusic"],
         },
       },
     },

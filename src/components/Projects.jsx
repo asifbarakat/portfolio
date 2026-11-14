@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { FiArrowUpRight, FiGithub, FiMinus, FiPlus } from "react-icons/fi";
 import { Section, Reveal, Tag, Magnet } from "./ui";
 import { projects, profile } from "../data/portfolio";
+import { playSfx } from "../utils/sfx";
 
 /* Calculate drawer height via @chenglou/pretext and verify live inner scrollHeight so phone wraps never clip */
 function usePretextDrawerHeight(description, features, isOpen) {
@@ -164,7 +165,11 @@ export default function Projects() {
   const [openMap, setOpenMap] = useState({ 0: true, 1: true });
 
   const toggle = (idx) => {
-    setOpenMap((prev) => ({ ...prev, [idx]: !prev[idx] }));
+    setOpenMap((prev) => {
+      const next = !prev[idx];
+      playSfx(next ? "open" : "close");
+      return { ...prev, [idx]: next };
+    });
   };
 
   return (

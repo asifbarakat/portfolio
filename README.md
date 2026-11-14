@@ -9,8 +9,9 @@ A fast, animated single-page portfolio built with **React 19 + Vite + Tailwind C
 ## ✨ Highlights
 
 - Monochrome Black & White + `#c8f542` acid-lime kinetic UI with spring-repulsion typography, `@chenglou/pretext` drawer measurement, and variable-font proximity
-- Security/network margin token field on desktop + perimeter telemetry rail on phones, tactile magnifying dock, `Lenis` inertial scrolling, and `@number-flow/react` live metrics
-- Systems research highlight: Adaptive Split Computing & Feature Extraction with reproducible metrics
+- `d3-delaunay` topological margin mesh on desktop, Delaunay tap bursts + perimeter telemetry rail on phones, `Lenis` inertial scrolling, and `@number-flow/react` live metrics
+- Systems research exhibit featuring an interactive Verlet physics dual-cable rig (`RPi 5 — CODEC — HOST`) and rotatable 3D `zdog` vector hardware diorama
+- Default-active `zzfx` procedural UI audio and `TinyMusic` cyber-synth BGM (MIT) with Navbar spectrum visualizer
 - Responsive layout, keyboard focus navigation, Open Graph preview card, and `prefers-reduced-motion` support
 
 ## 🛠 Tech Stack
@@ -23,6 +24,10 @@ A fast, animated single-page portfolio built with **React 19 + Vite + Tailwind C
 | Framer Motion | Animations & spring docks |
 | `@chenglou/pretext` | Zero-reflow 120fps text layout |
 | `@number-flow/react` | Smooth spinning telemetry numbers |
+| `d3-delaunay` | Real-time Delaunay spatial topology mesh |
+| `zdog` | Pseudo-3D isometric hardware diorama |
+| `zzfx` | Zero-asset procedural microchip audio |
+| `tinymusic` | Procedural futuristic WebAudio synth BGM (MIT) |
 | `lenis` | Inertial smooth scrolling |
 | react-icons | Icons |
 

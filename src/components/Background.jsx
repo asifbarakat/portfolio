@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { Delaunay } from "d3-delaunay";
 import { useReducedMotion } from "framer-motion";
 
 const TOKENS = [
@@ -15,7 +16,32 @@ const COMPACT_TOKENS = [
   "HMAC", "OIDC", "SOCK", "AUDIT",
 ];
 
-/* Desktop: left/right security & network kinetic token lanes; Phone: perimeter telemetry rail + tap pulse */
+function buildTapFacetEdges() {
+  const pts = [[0, 0]];
+  for (let i = 0; i < 8; i++) {
+    const a = (i / 8) * Math.PI * 2 + (Math.random() - 0.5) * 0.35;
+    const r = 18 + Math.random() * 22;
+    pts.push([Math.cos(a) * r, Math.sin(a) * r]);
+  }
+  const del = Delaunay.from(pts);
+  const { triangles } = del;
+  const seen = new Set();
+  const edges = [];
+  for (let i = 0; i < triangles.length; i += 3) {
+    const tri = [triangles[i], triangles[i + 1], triangles[i + 2]];
+    for (let e = 0; e < 3; e++) {
+      const a = tri[e];
+      const b = tri[(e + 1) % 3];
+      const key = a < b ? a * 16 + b : b * 16 + a;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      edges.push([pts[a][0], pts[a][1], pts[b][0], pts[b][1]]);
+    }
+  }
+  return edges;
+}
+
+/* Desktop: left/right security & network kinetic lanes + live d3-delaunay mesh; Phone: perimeter rail + Delaunay tap burst */
 export default function Background() {
   const canvasRef = useRef(null);
   const reduce = useReducedMotion();
@@ -70,6 +96,7 @@ export default function Background() {
             const by = r * rowStep + ((c * 26) % rowStep);
             nodes.push({
               label,
+              side: isRight ? 1 : 0,
               bx,
               by,
               minX,
@@ -110,6 +137,53 @@ export default function Background() {
       buildNodes();
     };
 
+    const drawLaneMesh = (pts, cutBottom) => {
+      if (pts.length < 3) return;
+      const del = Delaunay.from(pts, (d) => d.px, (d) => d.py);
+      const { triangles } = del;
+      const seen = new Set();
+      const stride = pts.length + 1;
+      const maxEdge = 190;
+      const linkRadius = 185;
+
+      for (let i = 0; i < triangles.length; i += 3) {
+        const tri = [triangles[i], triangles[i + 1], triangles[i + 2]];
+        for (let e = 0; e < 3; e++) {
+          const a = tri[e];
+          const b = tri[(e + 1) % 3];
+          const key = a < b ? a * stride + b : b * stride + a;
+          if (seen.has(key)) continue;
+          seen.add(key);
+
+          const p0 = pts[a];
+          const p1 = pts[b];
+          const len = Math.hypot(p1.px - p0.px, p1.py - p0.py);
+          if (len > maxEdge) continue;
+
+          const midY = (p0.py + p1.py) * 0.5;
+          const bottomFade = Math.min(1, Math.max(0, (cutBottom - midY) / 48));
+          const lenFade = 1 - len / maxEdge;
+          let near = 0;
+          if (!reduce && pointer.active && pointer.y < cutBottom) {
+            const md = Math.hypot((p0.px + p1.px) * 0.5 - pointer.x, midY - pointer.y);
+            if (md < linkRadius) near = 1 - md / linkRadius;
+          }
+
+          ctx.beginPath();
+          ctx.moveTo(p0.px, p0.py);
+          ctx.lineTo(p1.px, p1.py);
+          if (near > 0.12) {
+            ctx.strokeStyle = `rgba(200, 245, 66, ${((0.08 + near * 0.36) * bottomFade).toFixed(3)})`;
+            ctx.lineWidth = 0.65 + near * 0.55;
+          } else {
+            ctx.strokeStyle = `rgba(82, 82, 91, ${(0.18 * lenFade * bottomFade).toFixed(3)})`;
+            ctx.lineWidth = 0.6;
+          }
+          ctx.stroke();
+        }
+      }
+    };
+
     const draw = (now) => {
       const t = now * 0.001;
       const scrollY = window.scrollY || 0;
@@ -121,9 +195,9 @@ export default function Background() {
       ctx.clearRect(0, 0, W, H);
 
       if (nodes.length > 0) {
-        ctx.font = '600 10.5px "JetBrains Mono", ui-monospace, SFMono-Regular, monospace';
-        ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
+        const leftVis = [];
+        const rightVis = [];
+        const renderQueue = [];
 
         for (let i = 0; i < nodes.length; i++) {
           const n = nodes[i];
@@ -158,6 +232,22 @@ export default function Background() {
           const py = baseY + driftY + n.y;
           if (py < navTop || py > cutBottom) continue;
 
+          const pt = { px, py, n, proximity };
+          if (n.side === 0) leftVis.push(pt);
+          else rightVis.push(pt);
+          renderQueue.push(pt);
+        }
+
+        // Draw Delaunay security mesh cleanly behind tokens in each lane
+        drawLaneMesh(leftVis, cutBottom);
+        drawLaneMesh(rightVis, cutBottom);
+
+        ctx.font = '600 10.5px "JetBrains Mono", ui-monospace, SFMono-Regular, monospace';
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+
+        for (let i = 0; i < renderQueue.length; i++) {
+          const { px, py, n, proximity } = renderQueue[i];
           const topFade = Math.min(1, (py - navTop) / 28);
           const bottomFade = Math.min(1, (cutBottom - py) / 36);
           const pulse = reduce ? 0 : (Math.sin(t * 1.35 + n.phase) + 1) * 0.5;
@@ -181,7 +271,7 @@ export default function Background() {
           ctx.restore();
         }
       } else {
-        // Mobile / compact viewport perimeter telemetry rail & subtle tap sonar
+        // Mobile / compact viewport perimeter telemetry rail & Delaunay facet tap pulse
         for (let i = 0; i < railTicks.length; i++) {
           const rt = railTicks[i];
           const py = (((rt.by - scrollY * 0.22) % wrapH) + wrapH) % wrapH - 20;
@@ -214,13 +304,17 @@ export default function Background() {
         for (let r = ripples.length - 1; r >= 0; r--) {
           const rp = ripples[r];
           const age = t - rp.t;
-          if (age > 0.75 || rp.y < navTop || rp.y > cutBottom) continue;
-          const rad = 10 + age * 120;
-          const alpha = (1 - age / 0.75) * 0.22;
+          if (age > 0.7 || rp.y < navTop || rp.y > cutBottom) continue;
+          const scale = 0.45 + age * 2.2;
+          const alpha = (1 - age / 0.7) * 0.28;
           ctx.beginPath();
-          ctx.arc(rp.x, rp.y, rad, 0, Math.PI * 2);
+          for (let k = 0; k < rp.edges.length; k++) {
+            const [x0, y0, x1, y1] = rp.edges[k];
+            ctx.moveTo(rp.x + x0 * scale, rp.y + y0 * scale);
+            ctx.lineTo(rp.x + x1 * scale, rp.y + y1 * scale);
+          }
           ctx.strokeStyle = `rgba(200, 245, 66, ${alpha.toFixed(3)})`;
-          ctx.lineWidth = 1;
+          ctx.lineWidth = 0.85;
           ctx.stroke();
         }
       }
@@ -239,7 +333,12 @@ export default function Background() {
     const onTouchStart = (e) => {
       const touch = e.touches?.[0];
       if (!touch) return;
-      ripples.push({ x: touch.clientX, y: touch.clientY, t: performance.now() * 0.001 });
+      ripples.push({
+        x: touch.clientX,
+        y: touch.clientY,
+        t: performance.now() * 0.001,
+        edges: buildTapFacetEdges(),
+      });
       if (ripples.length > 4) ripples.shift();
     };
 

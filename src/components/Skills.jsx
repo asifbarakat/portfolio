@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import { Section, Reveal } from "./ui";
 import { skillGroups } from "../data/portfolio";
+import { playSfx } from "../utils/sfx";
 
 /* Body 3: Desktop pointer proximity interpolates font weight 400 -> 850; phone tap inspects individual chips */
 function ProximityGroup({ group, index, interactive, tappedItem, onTapItem }) {
@@ -122,7 +123,10 @@ export default function Skills() {
             index={i}
             interactive={interactive}
             tappedItem={tappedItem}
-            onTapItem={(item) => setTappedItem((cur) => (cur === item ? "" : item))}
+            onTapItem={(item) => {
+              playSfx("chip");
+              setTappedItem((cur) => (cur === item ? "" : item));
+            }}
           />
         ))}
       </div>

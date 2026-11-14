@@ -4,7 +4,6 @@ import "lenis/dist/lenis.css";
 import { motion, useScroll, useSpring, MotionConfig } from "framer-motion";
 import Background from "./components/Background";
 import Navbar from "./components/Navbar";
-import Dock from "./components/Dock";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Skills from "./components/Skills";
@@ -57,7 +56,6 @@ export default function App() {
       </main>
 
       <Footer />
-      <Dock />
     </MotionConfig>
   );
 }

@@ -89,8 +89,8 @@ body {
 }
 
 .outline-num {
-  -webkit-text-stroke: 1px var(--color-line);
-  color: transparent;
+  -webkit-text-stroke: 1.75px #848490;
+  color: rgba(244, 244, 245, 0.055);
 }
 
 /* Gen-5 / Unova geometric chamfers */

@@ -32,7 +32,7 @@ export function Section({ id, index, eyebrow, title, accent, children, className
               {accent && <span className="serif text-acid"> {accent}</span>}
             </h2>
           </div>
-          <span className="outline-num hidden select-none font-mono text-8xl font-bold leading-none md:block">
+          <span className="outline-num shrink-0 select-none font-mono text-5xl font-bold leading-none sm:text-7xl md:text-8xl">
             {index}
           </span>
         </div>

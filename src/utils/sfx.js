@@ -32,14 +32,9 @@ const PRESETS = {
   ],
 };
 
-function ensureReady() {
-  try {
-    ZZFX.volume = 0.14;
-    if (ZZFX.audioContext?.state === "suspended") {
-      void ZZFX.audioContext.resume();
-    }
-  } catch {
-    // WebAudio blocked or unsupported
+function triggerSpec(spec) {
+  for (const params of spec) {
+    zzfx(...params);
   }
 }
 
@@ -48,10 +43,20 @@ export function playSfx(name, force = false) {
   const spec = PRESETS[name];
   if (!spec) return;
   try {
-    ensureReady();
-    for (const params of spec) {
-      zzfx(...params);
+    ZZFX.volume = 0.14;
+    const ac = ZZFX.audioContext;
+    // Wait for AudioContext unlock before triggering so first click on strict HTTPS origins isn't dropped
+    if (ac && ac.state === "suspended") {
+      ac.resume()
+        .then(() => {
+          if ((enabled || force) && ac.state === "running") {
+            triggerSpec(spec);
+          }
+        })
+        .catch(() => {});
+      return;
     }
+    triggerSpec(spec);
   } catch {
     // Audio playback safely ignored if context unavailable
   }

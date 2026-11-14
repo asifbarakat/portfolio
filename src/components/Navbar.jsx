@@ -5,13 +5,19 @@ import { navLinks } from "../data/portfolio";
 import { playSfx, useSfx } from "../utils/sfx";
 import { getBgmAnalyser, useBgm } from "../utils/bgm";
 
-function EqBars({ active, reduce }) {
+function EqBars({ active, waiting, reduce }) {
   const barRefs = useRef([]);
 
   useEffect(() => {
-    if (!active || reduce) {
+    if (!active || waiting || reduce) {
       barRefs.current.forEach((el, i) => {
-        if (el) el.style.height = active ? `${6 + ((i * 3) % 5)}px` : "3px";
+        if (el) {
+          el.style.height = active
+            ? waiting
+              ? "4px"
+              : `${6 + ((i * 3) % 5)}px`
+            : "3px";
+        }
       });
       return;
     }
@@ -37,7 +43,7 @@ function EqBars({ active, reduce }) {
     return () => {
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, [active, reduce]);
+  }, [active, waiting, reduce]);
 
   return (
     <span aria-hidden="true" className="flex h-3 items-end gap-[2px]">
@@ -47,8 +53,10 @@ function EqBars({ active, reduce }) {
           ref={(el) => {
             barRefs.current[i] = el;
           }}
-          className={`w-[2px] transition-[background-color] ${active ? "bg-acid" : "bg-ash"}`}
-          style={{ height: active ? "7px" : "3px" }}
+          className={`w-[2px] transition-[background-color] ${
+            active ? (waiting ? "bg-acid/70 animate-pulse" : "bg-acid") : "bg-ash"
+          }`}
+          style={{ height: active ? (waiting ? "4px" : "7px") : "3px" }}
         />
       ))}
     </span>
@@ -59,7 +67,7 @@ function EqBars({ active, reduce }) {
 export default function Navbar() {
   const reduce = useReducedMotion();
   const [sfxOn, toggleSfx] = useSfx();
-  const [bgmOn, toggleBgm] = useBgm();
+  const [bgmOn, toggleBgm, bgmWaiting] = useBgm();
 
   return (
     <motion.header
@@ -95,15 +103,30 @@ export default function Navbar() {
             type="button"
             data-bgm-toggle="true"
             onClick={toggleBgm}
-            aria-pressed={bgmOn}
-            aria-label={bgmOn ? "Stop procedural synth soundtrack" : "Play procedural futuristic soundtrack"}
+            aria-pressed={bgmOn && !bgmWaiting}
+            aria-label={
+              !bgmOn
+                ? "Play procedural futuristic soundtrack"
+                : bgmWaiting
+                  ? "Start procedural synth soundtrack (armed for first interaction)"
+                  : "Stop procedural synth soundtrack"
+            }
+            title={
+              !bgmOn
+                ? "BGM off — click to play synth"
+                : bgmWaiting
+                  ? "BGM armed — click anywhere or tap BGM to start audio"
+                  : "BGM playing — click to mute"
+            }
             className={`inline-flex h-8 cursor-pointer items-center gap-1.5 border px-2 font-mono text-[10px] uppercase tracking-wider transition-colors active:scale-95 chamfer-sm sm:px-2.5 sm:text-[10.5px] ${
               bgmOn
-                ? "border-acid bg-panel text-acid"
+                ? bgmWaiting
+                  ? "border-acid/55 bg-panel text-acid/85 hover:border-acid hover:text-acid"
+                  : "border-acid bg-panel text-acid"
                 : "border-line bg-panel text-mute hover:border-ash hover:text-chalk"
             }`}
           >
-            <EqBars active={bgmOn} reduce={Boolean(reduce)} />
+            <EqBars active={bgmOn} waiting={bgmWaiting} reduce={Boolean(reduce)} />
             <span>BGM</span>
           </button>
           <button

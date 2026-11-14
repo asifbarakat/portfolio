@@ -4,6 +4,7 @@ import { ZZFX } from "zzfx";
 
 /* Open-source MIT procedural futuristic synth engine (TinyMusic + swept LPF + stereo delay DSP) */
 const BPM = 94;
+const ARM_EVENTS = ["pointerdown", "pointerup", "touchend", "click", "keydown"];
 
 // D minor / Dorian cyber-nocturne (all 4 layers share exact 16-beat cycle length)
 const BASS_NOTES = [
@@ -34,25 +35,40 @@ const BELL_NOTES = [
   "- h", "E5 q", "- q",
 ];
 
-let playing = true; // default ON; starts immediately or upon first browser interaction gesture
+let playing = true; // default ON; starts immediately if permitted or upon first valid browser unlock
 let engine = null;
 let armed = false;
+let watchedAc = null;
 const listeners = new Set();
 
 function resolveSeqCtor() {
   return TinyMusic.Sequence || TinyMusic.default?.Sequence;
 }
 
-function createSynthEngine() {
-  const ac = ZZFX.audioContext || new AudioContext();
-  if (ac.state === "suspended") {
-    void ac.resume();
-  }
+function getSharedAudioContext() {
+  if (typeof window === "undefined") return null;
+  if (ZZFX.audioContext) return ZZFX.audioContext;
+  const Ctor = window.AudioContext || window.webkitAudioContext;
+  if (!Ctor) return null;
+  const ac = new Ctor();
+  ZZFX.audioContext = ac;
+  return ac;
+}
 
+function isAwaitingUnlock() {
+  if (!playing) return false;
+  const ac = ZZFX.audioContext;
+  return !engine || !ac || ac.state !== "running";
+}
+
+function notify() {
+  const snapshot = { on: playing, awaiting: isAwaitingUnlock() };
+  listeners.forEach((cb) => cb(snapshot));
+}
+
+function createSynthEngine(ac) {
   const Sequence = resolveSeqCtor();
-  if (!Sequence) {
-    throw new Error("TinyMusic.Sequence unavailable");
-  }
+  if (!Sequence) throw new Error("TinyMusic Sequence unavailable");
 
   // Master bus + analyzer for live UI spectrum bars
   const master = ac.createGain();
@@ -101,7 +117,7 @@ function createSynthEngine() {
   damp.connect(wet);
   wet.connect(master);
 
-  // Build synchronized sequences
+  // Build synchronized sequences only once AudioContext clock is actively running
   const bass = new Sequence(ac, BPM, BASS_NOTES);
   bass.createCustomWave([0, 1, 0.28, 0.1, 0.04]);
   bass.smoothing = 0.16;
@@ -171,45 +187,135 @@ function stopEngine() {
   }
 }
 
+function armUnlockListeners() {
+  if (armed || typeof window === "undefined") return;
+  armed = true;
+  ARM_EVENTS.forEach((evt) => {
+    window.addEventListener(evt, onUnlockGesture, { capture: true, passive: true });
+  });
+}
+
 function disarmUnlock() {
   if (!armed || typeof window === "undefined") return;
   armed = false;
-  window.removeEventListener("pointerdown", onFirstGesture, true);
-  window.removeEventListener("keydown", onFirstGesture, true);
+  ARM_EVENTS.forEach((evt) => {
+    window.removeEventListener(evt, onUnlockGesture, { capture: true });
+  });
 }
 
-function onFirstGesture(e) {
-  // If user directly clicked the BGM mute button, toggleBgm stops playback instead of auto-starting
-  if (e?.target?.closest?.('[data-bgm-toggle="true"]')) {
+function tryStartSync() {
+  const ac = getSharedAudioContext();
+  if (!playing || !ac || ac.state !== "running") return false;
+  if (!engine) {
+    try {
+      engine = createSynthEngine(ac);
+    } catch {
+      playing = false;
+      disarmUnlock();
+      notify();
+      return false;
+    }
+  }
+  disarmUnlock();
+  notify();
+  return true;
+}
+
+function onAudioStateChange() {
+  if (!playing) {
+    disarmUnlock();
+    notify();
+    return;
+  }
+  if (watchedAc?.state === "running") {
+    tryStartSync();
+    return;
+  }
+  armUnlockListeners();
+  notify();
+}
+
+function attachStateWatcher(ac) {
+  if (!ac || ac === watchedAc) return;
+  if (watchedAc) {
+    watchedAc.removeEventListener("statechange", onAudioStateChange);
+  }
+  watchedAc = ac;
+  ac.addEventListener("statechange", onAudioStateChange);
+}
+
+function onUnlockGesture(e) {
+  if (!playing) {
     disarmUnlock();
     return;
   }
-  disarmUnlock();
-  if (playing && !engine) {
-    try {
-      engine = createSynthEngine();
-    } catch {
-      playing = false;
-      listeners.forEach((cb) => cb(playing));
+  // Let direct clicks on the BGM button flow through toggleBgm() cleanly without double-handling
+  if (e?.target instanceof Element && e.target.closest?.('[data-bgm-toggle="true"]')) {
+    return;
+  }
+  const ac = getSharedAudioContext();
+  if (!ac) return;
+  attachStateWatcher(ac);
+
+  if (ac.state === "running") {
+    tryStartSync();
+    return;
+  }
+
+  // Keep unlock listeners armed until resume() genuinely moves AudioContext to "running"
+  try {
+    const p = ac.resume();
+    if (p && typeof p.then === "function") {
+      p.then(() => {
+        if (playing) tryStartSync();
+      }).catch(() => {});
     }
+  } catch {
+    // Stay armed for the next qualifying user activation gesture
   }
 }
 
-export function armDefaultBgm() {
-  if (!playing || engine || typeof window === "undefined") return;
-  const ac = ZZFX.audioContext;
-  if (ac && ac.state === "running") {
-    try {
-      engine = createSynthEngine();
-      return;
-    } catch {
-      // fall through to gesture arm
-    }
+function resumeAndStart() {
+  const ac = getSharedAudioContext();
+  if (!ac) {
+    playing = false;
+    disarmUnlock();
+    notify();
+    return;
   }
-  if (armed) return;
-  armed = true;
-  window.addEventListener("pointerdown", onFirstGesture, true);
-  window.addEventListener("keydown", onFirstGesture, true);
+  attachStateWatcher(ac);
+
+  if (ac.state === "running") {
+    tryStartSync();
+    return;
+  }
+
+  armUnlockListeners();
+  try {
+    const p = ac.resume();
+    if (p && typeof p.then === "function") {
+      p.then(() => {
+        if (playing) tryStartSync();
+      }).catch(() => {});
+    }
+  } catch {
+    // Stay armed until a valid interaction resolves resume()
+  }
+  notify();
+}
+
+export function armDefaultBgm() {
+  if (!playing || typeof window === "undefined") return;
+  const ac = getSharedAudioContext();
+  if (!ac) return;
+  attachStateWatcher(ac);
+
+  if (ac.state === "running") {
+    tryStartSync();
+    return;
+  }
+  armUnlockListeners();
+  notify();
 }
 
 export function getBgmAnalyser() {
@@ -217,30 +323,47 @@ export function getBgmAnalyser() {
 }
 
 export function toggleBgm() {
+  const ac = getSharedAudioContext();
+  if (ac) attachStateWatcher(ac);
+
+  // If armed-by-default BGM hasn't started outputting yet (e.g. cold HTTPS reload waiting on gesture),
+  // a single direct click on [BGM] unlocks and starts audio immediately instead of muting it.
+  if (playing && (!engine || !ac || ac.state !== "running")) {
+    resumeAndStart();
+    return playing;
+  }
+
   disarmUnlock();
   if (playing) {
     playing = false;
     stopEngine();
   } else {
-    try {
-      engine = createSynthEngine();
-      playing = true;
-    } catch {
-      playing = false;
-    }
+    playing = true;
+    resumeAndStart();
   }
-  listeners.forEach((cb) => cb(playing));
+  notify();
   return playing;
 }
 
 export function useBgm() {
-  const [on, setOn] = useState(playing);
+  const [state, setState] = useState(() => ({
+    on: playing,
+    awaiting: isAwaitingUnlock(),
+  }));
+
   useEffect(() => {
-    listeners.add(setOn);
+    const onChange = (next) => {
+      setState((prev) =>
+        prev.on === next.on && prev.awaiting === next.awaiting ? prev : next
+      );
+    };
+    listeners.add(onChange);
     armDefaultBgm();
+    onChange({ on: playing, awaiting: isAwaitingUnlock() });
     return () => {
-      listeners.delete(setOn);
+      listeners.delete(onChange);
     };
   }, []);
-  return [on, toggleBgm];
+
+  return [state.on, toggleBgm, state.awaiting];
 }
